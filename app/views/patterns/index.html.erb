@@ -1,0 +1,21 @@
+<h1>Patterns</h1>
+
+<table class="table">
+  <tbody>
+    <% @patterns.each do |pattern| %>
+      <tr>
+        <td><%= link_to 'Show', pattern %></td>
+        <% if can?(:manage, Pattern) %>
+          <td><%= link_to 'Edit', edit_pattern_path(pattern) %></td>
+          <td><%= link_to 'Destroy', pattern, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if can?(:create, Pattern) %>
+  <%= link_to 'New Pattern', new_pattern_path %>
+<% end %>

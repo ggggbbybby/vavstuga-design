@@ -1,0 +1,29 @@
+<h1>Yarns</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Size</th>
+      <th>Yarn Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @yarns.each do |yarn| %>
+      <tr>
+        <td><%= yarn.size %></td>
+        <td><%= yarn.name %></td>
+        <% if can?(:manage, Yarn) %>
+          <td><%= link_to 'Edit', yarn_path(yarn) %></td>
+          <td><%= link_to 'Destroy', yarn, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if can?(:create, Yarn) %>
+  <%= link_to 'New Yarn', new_yarn_path %>
+<% end %>

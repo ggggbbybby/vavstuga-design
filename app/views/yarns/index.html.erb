@@ -15,7 +15,7 @@
         <td><%= yarn.name %></td>
         <% if can?(:manage, Yarn) %>
           <td><%= link_to 'Edit', yarn_path(yarn) %></td>
-          <td><%= link_to 'Destroy', yarn, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%#= link_to 'Destroy', yarn, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
       </tr>
     <% end %>

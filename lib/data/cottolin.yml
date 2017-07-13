@@ -1,0 +1,150 @@
+name: Cottolin
+size: 22/2
+slug: th-yarn-bock-cot-lin-22-2
+colors:
+  - code: 2000
+    name: ivory
+  - code: 2003
+    name: silver
+  - code: 2004
+    name: "ash gray"
+  - code: 2005
+    name: black
+  - code: 2006
+    name: sand
+  - code: 2008
+    name: daffodil
+  - code: 2009
+    name: goldenrod
+  - code: 2010
+    name: brass
+  - code: 2011
+    name: "yellow ochre"
+  - code: 2012
+    name: dandelion
+  - code: 2013
+    name: marigold
+  - code: 2014
+    name: pumpkin
+  - code: 2015
+    name: tomato
+  - code: 2016
+    name: cocoa
+  - code: 2017
+    name: copper
+  - code: 2018
+    name: chestnut
+  - code: 2019
+    name: "light poppy"
+  - code: 2020
+    name: "light cardinal"
+  - code: 2021
+    name: "light watermelon"
+  - code: 2022
+    name: watermelon
+  - code: 2023
+    name: boysenberry
+  - code: 2024
+    name: "coral pink"
+  - code: 2025
+    name: "dusty plum"
+  - code: 2026
+    name: grape
+  - code: 2027
+    name: "pastel blue"
+  - code: 2028
+    name: "sky blue"
+  - code: 2029
+    name: "yale blue"
+  - code: 2030
+    name: sapphire
+  - code: 2031
+    name: navy
+  - code: 2032
+    name: "sea blue"
+  - code: 2033
+    name: pine
+  - code: 2034
+    name: aquamarine
+  - code: 2035
+    name: aqua
+  - code: 2036
+    name: mint
+  - code: 2038
+    name: fern
+  - code: 2039
+    name: willow
+  - code: 2040
+    name: lime
+  - code: 2041
+    name: "light pear"
+  - code: 2042
+    name: pear
+  - code: 2043
+    name: asparagus
+  - code: 2044
+    name: sable
+  - code: 2045
+    name: "black walnut"
+  - code: 2046
+    name: cedar
+  - code: 2047
+    name: sienna
+  - code: 2048
+    name: khaki
+  - code: 2049
+    name: camel
+  - code: 2050
+    name: amber
+  - code: 2051
+    name: ladyslipper
+  - code: 2052
+    name: "dusty rose"
+  - code: 2053
+    name: orchid
+  - code: 2054
+    name: trillium
+  - code: 2055
+    name: indigo
+  - code: 2056
+    name: "egyptian blue"
+  - code: 2057
+    name: iceberg
+  - code: 2058
+    name: ultramarine
+  - code: 2059
+    name: teal
+  - code: 2060
+    name: "persian blue"
+  - code: 2061
+    name: lichen
+  - code: 2062
+    name: "apple green"
+  - code: 2063
+    name: emerald
+  - code: 2064
+    name: "hunter green"
+  - code: 2065
+    name: loden
+  - code: 2067
+    name: lilac
+  - code: 2068
+    name: maize
+  - code: 2069
+    name: grass
+  - code: 2070
+    name: "pastel blue gray"
+  - code: 2071
+    name: gold
+  - code: 2072
+    name: cream
+  - code: 2073
+    name: almond
+  - code: 2074
+    name: cyan
+  - code: 2075
+    name: "light peach"
+  - code: 2076
+    name: "light aqua"
+  - code: 2080
+    name: cardinal

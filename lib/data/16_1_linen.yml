@@ -1,0 +1,144 @@
+name: Linen
+size: 16/1
+slug: th-yarn-bock-lin-line-16
+colors:
+  - code: blch-2
+    name: bleached
+  - code: gold-2
+    name: 'golden bleached'
+  - code: half-2
+    name: 'half bleached'
+  - code: unbl-2
+    name: 'unbleached'
+  - code: 2022
+    name: chiffon
+  - code: 2030
+    name: lemon
+  - code: '0101'
+    name: "school bus"
+  - code: '0501'
+    name: cream
+  - code: '0105'
+    name: carrot
+  - code: '0062'
+    name: pumpkin
+  - code: '0106'
+    name: tangerine
+  - code: '0070'
+    name: cantaloupe
+  - code: 1023
+    name: peach
+  - code: 1299
+    name: "burnt orange"
+  - code: '0519'
+    name: "light poppy"
+  - code: '0520'
+    name: poppy
+  - code: '0477'
+    name: trillium
+  - code: 0478
+    name: garnet
+  - code: '0122'
+    name: coral
+  - code: '0468'
+    name: salmon
+  - code: 1007
+    name: "light cardinal"
+  - code: '0517'
+    name: "dark cardinal"
+  - code: '0469'
+    name: watermelon
+  - code: '0510'
+    name: "light pink"
+  - code: '0518'
+    name: "coral pink"
+  - code: '0476'
+    name: boysenberry
+  - code: '0030'
+    name: flamingo
+  - code: '0031'
+    name: magenta
+  - code: '0128'
+    name: orchid
+  - code: '0129'
+    name: thistle
+  - code: 3040
+    name: lilac
+  - code: '0485'
+    name: "royal purple"
+  - code: '0487'
+    name: "royal blue"
+  - code: '0138'
+    name: "yale blue"
+  - code: '0134'
+    name: sapphire
+  - code: '0731'
+    name: cornflower
+  - code: '0515'
+    name: moonstone
+  - code: '0511'
+    name: iceberg
+  - code: '0612'
+    name: silver
+  - code: 1258
+    name: lead
+  - code: '0132'
+    name: "steel blue"
+  - code: '0603'
+    name: midnight
+  - code: '0136'
+    name: "northsea blue"
+  - code: '0137'
+    name: "electric blue"
+  - code: '0139'
+    name: "persian blue"
+  - code: '0040'
+    name: turquoise
+  - code: 3060
+    name: aqua
+  - code: '0492'
+    name: pine
+  - code: 4060
+    name: emerald
+  - code: '0144'
+    name: moss
+  - code: '0145'
+    name: asparagus
+  - code: '0712'
+    name: "spring green"
+  - code: 1028
+    name: chartreuse
+  - code: 1440
+    name: "apple green"
+  - code: 1460
+    name: "dark olive"
+  - code: '0149'
+    name: olive
+  - code: '0906'
+    name: citrine
+  - code: '0454'
+    name: 'gold'
+  - code: '0104'
+    name: straw
+  - code: '0503'
+    name: mahogany
+  - code: 1301
+    name: oak
+  - code: 1300
+    name: sienna
+  - code: '0063'
+    name: chestnut
+  - code: '0061'
+    name: sable
+  - code: '0462'
+    name: umber
+  - code: '0470'
+    name: camel
+  - code: '0505'
+    name: ecru
+  - code: 1223
+    name: pewter
+  - code: 1224
+    name: steel
+  - code: '0522'
+    name: black

@@ -15,8 +15,8 @@
   <%= form.text_field :name %>
 
   <%= form.label :yarn %>
-  <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, id: :pattern_yarn_id %>
-  <p id="yarn-change" display="none">
+  <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, {}, { id: :pattern_yarn_id } %>
+  <p id="yarn-change" style="display:none;">
     please save and re-open this page after changing the yarn type
   </p>
 
@@ -34,10 +34,10 @@
         <tr>
           <td>
             <% # THIS IS NOT OK %>
-            <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [c['name'], c['code']] }, selected: selected_color %>
+            <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [c['name'], c['code']] }, { selected: selected_color } %>
           </td>
           <td>
-            <input type="text" name="pattern[stripes][][width]" value="<%= width %>" />
+            <%= form.select "stripes][][width", [1, 2, 3, 4, 5], { selected: width }%>
           </td>
           <td>
             <button type="button" class="remove-stripe">Remove</button>
@@ -50,7 +50,7 @@
           <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [c['name'], c['code']] }, { include_blank: true }, { disabled: true } %>
         </td>
         <td>
-          <input type="text" name="pattern[stripes][][width]" disabled />
+          <%= form.select "stripes][][width", [1, 2, 3, 4, 5], {}, { disabled: true } %>
         </td>
         <td>
           <button type="button" class="remove-stripe">Remove</button>

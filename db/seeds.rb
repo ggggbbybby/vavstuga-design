@@ -6,30 +6,21 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-vavstuga = User.create(
-  username: 'vavstuga',
-  email: 'office@vavstuga.com',
+tester = User.create(
+  username: 'tester',
+  email: 'test@example.com',
   admin: true,
-  password: 'vavstuga',
-  password_confirmation: 'vavstuga'
+  password: 'password123',
+  password_confirmation: 'password123'
 )
 
-cottolin = Yarn.create(
-  name: "Cottolin",
-  size: "22/2",
-  slug: "th-yarn-bock-cot-lin-22-2",
-  colors: [
-    { code: '2023', name: 'Boysenberry' },
-    { code: '2005', name: 'Black' },
-    { code: '2000', name: 'Ivory' },
-    { code: '2071', name: 'Gold' },
-    { code: '2035', name: 'Aqua' }
-  ]
-)
+cottolin, wool, linen = %w(cottolin 6_2_tuna 16_1_linen).map do |yarn|
+  Yarn.create(YAML.load_file("lib/data/#{yarn}.yml"))
+end
 
 patterns = Pattern.create(
   name: "Vertical Stripes",
   yarn: cottolin,
-  user: vavstuga,
+  user: tester,
   stripes: [{ color: "2000", width: 1}, { color: "2005", width: 1}]
 )

@@ -1,0 +1,220 @@
+name: Tuna Wool
+size: 6/2
+slug: th-yarn-borg-woo-tuna
+colors:
+  - code: '3000'
+    name: bleached
+  - code: '3001'
+    name: natural white
+  - code: '3726'
+    name: natural light gray
+  - code: '3002'
+    name: natural gray
+  - code: '3023'
+    name: natural medium gray
+  - code: '3031'
+    name: natural dark gray
+  - code: '3099'
+    name: black
+  - code: '3760'
+    name: iron
+  - code: '3761'
+    name: light khaki
+  - code: '3762'
+    name: dark khaki
+  - code: '3020'
+    name: natural brown
+  - code: '3064'
+    name: beige
+  - code: '3045'
+    name: almond
+  - code: '3763'
+    name: wheat
+  - code: '3302'
+    name: bronze
+  - code: '3003'
+    name: light citrine
+  - code: '3035'
+    name: citrine
+  - code: '3310'
+    name: canary
+  - code: '3380'
+    name: chiffon
+  - code: '3764'
+    name: citron
+  - code: '3044'
+    name: goldenrod
+  - code: '3738'
+    name: dandelion
+  - code: '3057'
+    name: amber
+  - code: '3038'
+    name: mahogany
+  - code: '3307'
+    name: straw
+  - code: '3306'
+    name: maize
+  - code: '3366'
+    name: cream
+  - code: '3367'
+    name: camel
+  - code: '3037'
+    name: walnut
+  - code: '3018'
+    name: umber
+  - code: '3715'
+    name: carrot
+  - code: '3015'
+    name: pumpkin
+  - code: '3344'
+    name: copper
+  - code: '3765'
+    name: burnt orange
+  - code: '3345'
+    name: sienna
+  - code: '3378'
+    name: tawny
+  - code: '3209'
+    name: cocoa
+  - code: '3017'
+    name: dusty rose
+  - code: '3315'
+    name: salmon
+  - code: '3058'
+    name: tomato
+  - code: '3313'
+    name: poppy
+  - code: '3021'
+    name: orange red
+  - code: '3317'
+    name: brick
+  - code: '3318'
+    name: light poppy
+  - code: '3766'
+    name: cardinal
+  - code: '3024'
+    name: madder
+  - code: '3033'
+    name: garnet
+  - code: '3032'
+    name: ruby
+  - code: '3717'
+    name: hot fuchsia
+  - code: '3723'
+    name: watermelon
+  - code: '3724'
+    name: magenta
+  - code: '3027'
+    name: boysenberry
+  - code: '3068'
+    name: mauve
+  - code: '3069'
+    name: sable
+  - code: '3321'
+    name: wine
+  - code: '3323'
+    name: orchid
+  - code: '3725'
+    name: mulberry
+  - code: '3026'
+    name: plum
+  - code: '3043'
+    name: royal purple
+  - code: '3025'
+    name: grape
+  - code: '3076'
+    name: dark purple
+  - code: '3081'
+    name: dark royal blue
+  - code: '3079'
+    name: indigo
+  - code: '3085'
+    name: powder blue
+  - code: '3767'
+    name: slate blue
+  - code: '3768'
+    name: persian blue
+  - code: '3328'
+    name: midnight
+  - code: '3769'
+    name: light denim
+  - code: '3011'
+    name: cornflower
+  - code: '3012'
+    name: denim
+  - code: '3770'
+    name: navy
+  - code: '3028'
+    name: royal blue
+  - code: '3326'
+    name: catalina blue
+  - code: '3771'
+    name: yale blue
+  - code: '3746'
+    name: pastel blue
+  - code: '3325'
+    name: sky blue
+  - code: '3022'
+    name: egyptian blue
+  - code: '3748'
+    name: cerulean blue
+  - code: '3747'
+    name: persian blue
+  - code: '3350'
+    name: light teal blue
+  - code: '3329'
+    name: iceberg
+  - code: '3330'
+    name: aquamarine
+  - code: '3718'
+    name: light cyan
+  - code: '3352'
+    name: cyan
+  - code: '3029'
+    name: teal blue
+  - code: '3735'
+    name: ultramarine
+  - code: '3095'
+    name: light sea green
+  - code: '3034'
+    name: light teal green
+  - code: '3736'
+    name: teal green
+  - code: '3379'
+    name: mint
+  - code: '3354'
+    name: light jade
+  - code: '3355'
+    name: forest green
+  - code: '3030'
+    name: pine
+  - code: '3210'
+    name: dark jade
+  - code: '3280'
+    name: loden
+  - code: '3040'
+    name: platinum green
+  - code: '3008'
+    name: lichen
+  - code: '3010'
+    name: avocado
+  - code: '3331'
+    name: hunter green
+  - code: '3104'
+    name: kelly green
+  - code: '3752'
+    name: dark spring green
+  - code: '3009'
+    name: asparagus
+  - code: '3751'
+    name: jungle green
+  - code: '3333'
+    name: spring green
+  - code: '3108'
+    name: apple green
+  - code: '3109'
+    name: dark olive
+  - code: '3007'
+    name: pear
+  - code: '3055'
+    name: olive

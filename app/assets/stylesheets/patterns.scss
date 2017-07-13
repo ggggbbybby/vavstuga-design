@@ -1,3 +1,64 @@
 // Place all the styles related to the patterns controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+#swatches {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#targets {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 25px;
+}
+
+.swatch {
+  width: 70px;
+  height: 70px;
+}
+
+.swatch.selected {
+  outline: white dotted 2px;
+  outline-offset: -2px;
+}
+
+.target {
+  width: 70px;
+  height: 70px;
+  border: 1px dashed black;
+  margin-right: 25px;
+}
+
+label.color {
+  padding: 10px;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.stripes span {
+  height: 250px;
+}
+
+.width-1 {
+  width: 10em;
+}
+
+.width-2 {
+  width: 20em;
+}
+
+.width-3 {
+  width: 30em;
+}
+
+.width-4 {
+  width: 40em;
+}
+
+.width-5 {
+  width: 50em;
+}

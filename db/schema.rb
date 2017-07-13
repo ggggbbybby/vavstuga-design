@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20170709180103) do
     t.bigint "user_id"
     t.bigint "yarn_id"
     t.string "name"
+    t.json "stripes"
+    t.json "default_colors"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_patterns_on_user_id"
@@ -47,6 +49,8 @@ ActiveRecord::Schema.define(version: 20170709180103) do
   create_table "yarns", force: :cascade do |t|
     t.string "name"
     t.string "size"
+    t.string "slug"
+    t.json "colors"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

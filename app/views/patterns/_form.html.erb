@@ -11,7 +11,82 @@
     </div>
   <% end %>
 
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.label :yarn %>
+  <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, id: :pattern_yarn_id %>
+  <p id="yarn-change" display="none">
+    please save and re-open this page after changing the yarn type
+  </p>
+
+  <% unless pattern.new_record? %>
+    <table id="stripes" class="table">
+      <tbody>
+      <tr>
+        <td>
+          <button type="button" id="add-stripe">Add Stripe</button>
+        </td>
+      </tr>
+
+      <% @pattern.stripes.each_with_index do |(color_key, width), index| %>
+        <% selected_color = pattern.default_colors[color_key] %>
+        <tr>
+          <td>
+            <% # THIS IS NOT OK %>
+            <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [c['name'], c['code']] }, selected: selected_color %>
+          </td>
+          <td>
+            <input type="text" name="pattern[stripes][][width]" value="<%= width %>" />
+          </td>
+          <td>
+            <button type="button" class="remove-stripe">Remove</button>
+          </td>
+        </tr>
+      <% end %>
+
+      <tr id="copyable" class="hidden">
+        <td>
+          <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [c['name'], c['code']] }, { include_blank: true }, { disabled: true } %>
+        </td>
+        <td>
+          <input type="text" name="pattern[stripes][][width]" disabled />
+        </td>
+        <td>
+          <button type="button" class="remove-stripe">Remove</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  var $copyable = $('#copyable');
+  $('#add-stripe').click(function() {
+    $copyable
+      .clone()
+      .appendTo("#stripes tbody")
+      .removeClass('hidden')
+      .find('[disabled]')
+      .attr('disabled', false)
+      .focus();
+  });
+
+  $('body').on('click', '.remove-stripe', function(e){
+    var $target = $(e.target);
+    $target.closest('tr').remove();
+  });
+
+  $('select#pattern_yarn_id').on('change', function(){
+    $('#yarn-change').show();
+    $('#stripes').hide();
+  });
+</script>
+
+

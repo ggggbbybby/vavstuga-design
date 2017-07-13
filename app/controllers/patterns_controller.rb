@@ -25,6 +25,7 @@ class PatternsController < ApplicationController
   # POST /patterns.json
   def create
     @pattern = Pattern.new(pattern_params)
+    @pattern.user = current_user || User.first
 
     respond_to do |format|
       if @pattern.save
@@ -62,13 +63,12 @@ class PatternsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pattern
-      @pattern = Pattern.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pattern
+    @pattern = Pattern.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pattern_params
-      params.fetch(:pattern, {})
-    end
+  def pattern_params
+    params.require(:pattern).permit(:name, :yarn_id, stripes: [:color, :width])
+  end
 end

@@ -4,6 +4,8 @@ class CreatePatterns < ActiveRecord::Migration[5.1]
       t.belongs_to :user
       t.belongs_to :yarn
       t.string :name
+      t.json :stripes
+      t.json :default_colors
       t.timestamps
     end
   end

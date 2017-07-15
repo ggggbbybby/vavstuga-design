@@ -4,8 +4,8 @@
 <h3><%= @pattern.name %></h3>
 
 <div class="flex-container stripes">
-  <% @pattern.stripes.each do |color, width| %>
-    <span class="stripe color-<%= color %> width-<%= width %>" data-stripe="<%= color %>"></span>
+  <% @pattern.scaled_stripes.each do |color, width| %>
+    <span class="stripe color-<%= color %>" data-stripe="<%= color %>" style="width:<%= width %>%;"></span>
   <% end %>
 </div>
 

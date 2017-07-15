@@ -7,7 +7,7 @@ class Pattern < ApplicationRecord
   def normalize_stripes
     # input: [{color: '2028', width: 3}]
     # output:
-    #   stripes: [[a, 3]]
+    #   stripes: [['a', 3]]
     #   default_colors: { a: '2028' }
     normalized = []
     mapping = {}
@@ -24,5 +24,12 @@ class Pattern < ApplicationRecord
 
     self.stripes = normalized
     self.default_colors = mapping.invert
+  end
+
+  def scaled_stripes
+    total_width = stripes.map(&:second).map(&:to_i).sum.to_f
+    stripes.map do |color, width|
+      [color, (width.to_i * 100/ total_width)]
+    end
   end
 end

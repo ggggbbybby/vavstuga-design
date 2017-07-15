@@ -32,7 +32,7 @@
       <tbody>
       <% @pattern.stripes.each_with_index do |(color_key, width), index| %>
         <% selected_color = pattern.default_colors[color_key] %>
-        <tr>
+        <tr class="mirrorable">
           <td>
             <% # THIS IS NOT OK %>
             <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { selected: selected_color }, { class: "form-control" } %>
@@ -60,6 +60,7 @@
       </tbody>
     </table>
     <button type="button" id="add-stripe" class="btn btn-default">Add Stripe</button>
+    <button type="button" id="mirror-existing" class="btn btn-default">Mirror</button>
   <% end %>
 
   <hr/>
@@ -76,9 +77,19 @@
       .clone()
       .appendTo("#stripes tbody")
       .removeClass('hidden')
+      .addClass('mirrorable')
       .find('[disabled]')
       .attr('disabled', false)
       .focus();
+  });
+
+  $('#mirror-existing').click(function(){
+    if(window.confirm("Are you sure you want to mirror the existing pattern? This might take a few seconds.")) {
+      var stripes = $('table#stripes tr.mirrorable').get().reverse();
+      $.each(stripes, function(idx, stripe) {
+        $(stripe).clone().appendTo('#stripes tbody');
+      });
+    }
   });
 
   $('body').on('click', '.remove-stripe', function(e){

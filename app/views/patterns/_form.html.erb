@@ -11,58 +11,61 @@
     </div>
   <% end %>
 
-  <%= form.label :name %>
-  <%= form.text_field :name %>
+  <div class="input-group col-md-4">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
 
-  <%= form.label :yarn %>
-  <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, {}, { id: :pattern_yarn_id } %>
-  <p id="yarn-change" style="display:none;">
-    please save and re-open this page after changing the yarn type
-  </p>
+    <%= form.label :yarn %>
+    <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, {}, { id: :pattern_yarn_id, class: "form-control" } %>
+    <p id="yarn-change" style="display: none;">
+      please save and re-open this page after changing the yarn type
+    </p>
+  </div>
+  <hr />
 
   <% unless pattern.new_record? %>
     <table id="stripes" class="table">
+      <thead>
+      <th>Color</th>
+      <th># of Threads</th>
+      </thead>
       <tbody>
-      <tr>
-        <td>
-          <button type="button" id="add-stripe">Add Stripe</button>
-        </td>
-      </tr>
-
       <% @pattern.stripes.each_with_index do |(color_key, width), index| %>
         <% selected_color = pattern.default_colors[color_key] %>
         <tr>
           <td>
             <% # THIS IS NOT OK %>
-            <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [c['name'], c['code']] }, { selected: selected_color } %>
+            <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { selected: selected_color }, { class: "form-control" } %>
           </td>
           <td>
-            <%= form.select "stripes][][width", [1, 2, 3, 4, 5], { selected: width }%>
+            <%= form.text_field "stripes][][width", value: width, class: "form-control" %>
           </td>
           <td>
-            <button type="button" class="remove-stripe">Remove</button>
+            <button type="button" class="remove-stripe btn">Remove</button>
           </td>
         </tr>
       <% end %>
 
       <tr id="copyable" class="hidden">
         <td>
-          <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [c['name'], c['code']] }, { include_blank: true }, { disabled: true } %>
+          <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { include_blank: true }, { disabled: true, class: "form-control" } %>
         </td>
         <td>
-          <%= form.select "stripes][][width", [1, 2, 3, 4, 5], {}, { disabled: true } %>
+          <%= form.text_field "stripes][][width", disabled: true, class: "form-control" %>
         </td>
         <td>
-          <button type="button" class="remove-stripe">Remove</button>
+          <button type="button" class="remove-stripe btn">Remove</button>
         </td>
       </tr>
       </tbody>
     </table>
-
+    <button type="button" id="add-stripe" class="btn btn-default">Add Stripe</button>
   <% end %>
 
+  <hr/>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: "btn" %>
   </div>
 <% end %>
 

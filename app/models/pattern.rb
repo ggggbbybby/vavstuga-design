@@ -29,7 +29,7 @@ class Pattern < ApplicationRecord
   def scaled_stripes
     total_width = stripes.map(&:second).map(&:to_i).sum.to_f
     stripes.map do |color, width|
-      [color, (width.to_i * 100/ total_width)]
+      [color, (width.to_i * 100 / total_width)]
     end
   end
 end

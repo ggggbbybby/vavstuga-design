@@ -15,15 +15,6 @@
   </a>
 </p>
 
-<!-- declare some globals bc laziness -->
-<script type="text/javascript">
-  var defaults = <%= @pattern.default_colors.to_json.html_safe %>;
-  var colors = <%= @pattern.yarn.colors.to_json.html_safe %>;
-  var bg = function(color) {
-    return `url("https://store.vavstuga.com/mm5/graphics/00000001/<%= @pattern.yarn.slug %>-${color}.jpg")`
-  };
-</script>
-
 <div id="targets">
   <% @pattern.default_colors.each do |key, _| %>
     <label class="color">
@@ -42,61 +33,3 @@
 </div>
 
 <p> issues? suggestions? questions? you can email me at <a href="mailto:hello@rebeccamgreen.com">hello@rebeccamgreen.com</a> or find me on ravelry <a href="http://www.ravelry.com/people/ggggbbybby">@ggggbbybby</a></p>.
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-
-  var selectedColor;
-  var color_name = function(color_code) {
-    return colors.find(function(c) { return c.code == color_code; }).name;
-  };
-
-
-  var pickColor = function(stripe, color) {
-    var bgColor = bg(color);
-    $(`.target[data-stripe="${stripe}"]`).css('background-image', bgColor);
-    $(`.color-code[data-stripe="${stripe}"]`).html(`#${color}`);
-    $(`.color-name[data-stripe="${stripe}"]`).html(color_name(color));
-    $(`.color-${stripe}`).css('background-image', bgColor);
-  };
-
-  var createSwatch = function(indx, color) {
-    var swatch = $('<div class="swatch"></div>');
-    swatch.attr('data-color', color.code);
-    swatch.css('background-image', bg(color.code));
-    swatch.attr('title', color.name);
-    $('#swatches').append(swatch);
-  };
-  $.each(colors, createSwatch);
-
-  var selectColor = function(e) {
-    resetSelectedColor();
-    selectedColor = e.target.dataset.color;
-    $(e.target).addClass('selected');
-  };
-
-  var resetSelectedColor = function() {
-    selectedColor = null;
-    $('.swatch.selected').removeClass('selected');
-  };
-
-  var setColor = function(e) {
-    if(selectedColor) {
-      var stripe = e.target.dataset.stripe;
-      pickColor(stripe, selectedColor);
-      resetSelectedColor();
-    }
-  };
-
-  $('.swatch').click(selectColor);
-  $('.target').click(setColor);
-  $('.stripe').click(setColor);
-
-  var setDefaults = function() {
-    $.each(defaults, pickColor);
-    resetSelectedColor();
-  };
-  setDefaults();
-  $('#reset-defaults').click(setDefaults);
-</script>
-

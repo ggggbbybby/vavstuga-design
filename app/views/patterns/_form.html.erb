@@ -21,6 +21,17 @@
       please save and re-open this page after changing the yarn type
     </p>
   </div>
+
+  <div id="colorPalette">
+    <h4>Color Palette</h4>
+    <div id="paletteSwatches">
+    </div>
+    <%= select_tag "color-palette",
+                   options_for_select(@pattern.yarn.color_options, @pattern.default_colors.values),
+                   multiple: true, class: :multiselect, id: "colorPalette"
+    %>
+  </div>
+
   <hr />
 
   <% unless pattern.new_record? %>
@@ -35,7 +46,7 @@
         <tr class="mirrorable">
           <td>
             <% # THIS IS NOT OK %>
-            <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { selected: selected_color }, { class: "form-control" } %>
+            <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { selected: selected_color }, { class: "form-control select-from-palette" } %>
           </td>
           <td>
             <%= form.text_field "stripes][][width", value: width, class: "form-control" %>
@@ -48,7 +59,7 @@
 
       <tr id="copyable" class="hidden">
         <td>
-          <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { include_blank: true }, { disabled: true, class: "form-control" } %>
+          <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { include_blank: true }, { disabled: true, class: "form-control select-from-palette" } %>
         </td>
         <td>
           <%= form.text_field "stripes][][width", disabled: true, class: "form-control" %>
@@ -71,35 +82,64 @@
 <% end %>
 
 <script type="text/javascript">
-  var $copyable = $('#copyable');
-  $('#add-stripe').click(function() {
-    $copyable
-      .clone()
-      .appendTo("#stripes tbody")
-      .removeClass('hidden')
-      .addClass('mirrorable')
-      .find('[disabled]')
-      .attr('disabled', false)
-      .focus();
-  });
+  $(document).ready ( function(){
+    var $copyable = $('#copyable');
+    $('#add-stripe').click(function() {
+      $copyable
+        .clone()
+        .appendTo("#stripes tbody")
+        .removeClass('hidden')
+        .addClass('mirrorable')
+        .find('[disabled]')
+        .attr('disabled', false)
+        .focus();
+    });
 
-  $('#mirror-existing').click(function(){
-    if(window.confirm("Are you sure you want to mirror the existing pattern? This might take a few seconds.")) {
-      var stripes = $('table#stripes tr.mirrorable').get().reverse();
-      $.each(stripes, function(idx, stripe) {
-        $(stripe).clone().appendTo('#stripes tbody');
+    $('#mirror-existing').click(function(){
+      if(window.confirm("Are you sure you want to mirror the existing pattern? This might take a few seconds.")) {
+        var stripes = $('table#stripes tr.mirrorable').get().reverse();
+        $.each(stripes, function(idx, stripe) {
+          $(stripe).clone().appendTo('#stripes tbody');
+        });
+      }
+    });
+
+    $('body').on('click', '.remove-stripe', function(e){
+      var $target = $(e.target);
+      $target.closest('tr').remove();
+    });
+
+    $('select#pattern_yarn_id').on('change', function(){
+      $('#yarn-change').show();
+      $('#stripes').hide();
+      $('#colorPalette').hide();
+    });
+
+    $('select.multiselect').multiselect({ maxHeight: 300, numberDisplayed: 2 });
+
+    var updatePalette = function() {
+      $('#paletteSwatches .swatch').remove();
+      $('#colorPalette').find('option:selected').each(function(a, item){
+        var swatch = $('<div class="swatch"></div>');
+        swatch.attr('data-color', item.value);
+        swatch.css('background-image', bg(item.value));
+        swatch.attr('title', colorName(item.value));
+        $("#paletteSwatches").append(swatch);
       });
-    }
-  });
+    };
 
-  $('body').on('click', '.remove-stripe', function(e){
-    var $target = $(e.target);
-    $target.closest('tr').remove();
-  });
-
-  $('select#pattern_yarn_id').on('change', function(){
-    $('#yarn-change').show();
-    $('#stripes').hide();
+    var updateOptions = function() {
+      $('.select-from-palette').each(function(idx, select){
+        var value = select.value;
+        select.options.length = 0;
+        select.options[0] = new Option();
+        $('#colorPalette').find('option:selected').each(function(idx, option) {
+          select.options[idx+1] = new Option(option.innerHTML, option.value, option.value === value, option.value === value);
+        });
+      });
+    };
+    $('#colorPalette').on('change', updatePalette).change();
+    $('#colorPalette').on('change', updateOptions).change();
   });
 </script>
 

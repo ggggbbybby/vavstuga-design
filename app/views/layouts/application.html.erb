@@ -65,7 +65,7 @@
 
   <script type="text/javascript">
     <!-- declare globals for laziness -->
-    <% if @pattern %>
+    <% if @pattern&.yarn %>
       var defaults = <%= @pattern.default_colors.to_json.html_safe %>;
       var colors = <%= @pattern.yarn.colors.to_json.html_safe %>;
       var bg = function(color) {

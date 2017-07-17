@@ -3,18 +3,19 @@ $(document).ready ( function(){
 
   var pickColor = function(stripe, color) {
     var bgColor = bg(color);
-    $(`.target[data-stripe="${stripe}"]`).css('background-image', bgColor);
-    $(`.color-code[data-stripe="${stripe}"]`).html(`#${color}`);
-    $(`.color-name[data-stripe="${stripe}"]`).html(colorName(color));
-    $(`.color-${stripe}`).css('background-image', bgColor);
+    var dataStripe = "[data-stripe=" + stripe + "]";
+    $(".target" + dataStripe).css('background-image', bgColor);
+    $(".color-code" + dataStripe).html("#" + color);
+    $(".color-name" + dataStripe).html(colorName(color));
+    $(".color-" + stripe).css('background-image', bgColor);
   };
 
-  var createSwatch = function(indx, color, container = "#swatches") {
+  var createSwatch = function(indx, color) {
     var swatch = $('<div class="swatch"></div>');
     swatch.attr('data-color', color.code);
     swatch.css('background-image', bg(color.code));
     swatch.attr('title', color.name);
-    $(container).append(swatch);
+    $("#swatches").append(swatch);
   };
   $.each(colors, createSwatch);
 

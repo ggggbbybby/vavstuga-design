@@ -22,19 +22,20 @@
     </p>
   </div>
 
-  <div id="colorPalette">
-    <h4>Color Palette</h4>
-    <div id="paletteSwatches">
-    </div>
-    <%= select_tag "color-palette",
-                   options_for_select(@pattern.yarn.color_options, @pattern.default_colors.values),
-                   multiple: true, class: :multiselect, id: "colorPalette"
-    %>
-  </div>
-
-  <hr />
-
   <% unless pattern.new_record? %>
+
+    <div id="colorPalette">
+      <h4>Color Palette</h4>
+      <div id="paletteSwatches">
+      </div>
+      <%= select_tag "color-palette",
+                     options_for_select(@pattern.yarn.color_options, @pattern.default_colors.values),
+                     multiple: true, class: :multiselect, id: "colorPalette"
+      %>
+    </div>
+
+    <hr />
+
     <table id="stripes" class="table">
       <thead>
       <th>Color</th>

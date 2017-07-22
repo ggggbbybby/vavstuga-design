@@ -36,79 +36,60 @@
 
     <hr />
 
-    <table id="stripes" class="table">
-      <thead>
-      <th>Color</th>
-      <th># of Threads</th>
-      </thead>
-      <tbody>
+    <div id="stripes">
+      <div class="row">
+        <div class="col-md-3">Color</div>
+        <div class="col-md-2"># of Threads</div>
+      </div>
       <% @pattern.stripes.each_with_index do |(color_key, width), index| %>
         <% selected_color = pattern.default_colors[color_key] %>
-        <tr class="mirrorable">
-          <td>
-            <% # THIS IS NOT OK %>
+        <div class="row mirrorable">
+          <div class="col-md-3">
             <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { selected: selected_color }, { class: "form-control select-from-palette" } %>
-          </td>
-          <td>
-            <%= form.text_field "stripes][][width", value: width, class: "form-control" %>
-          </td>
-          <td>
-            <button type="button" class="remove-stripe btn">Remove</button>
-          </td>
-        </tr>
+          </div>
+          <div class="col-md-2">
+            <%= form.text_field "stripes][][width", value: width, class: "form-control", type: "number" %>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="clone-stripe btn glyphicon glyphicon-duplicate" title="Duplicate this Stripe"></button>
+            <button type="button" class="remove-stripe btn glyphicon glyphicon-remove" title="Remove this Stripe"></button>
+          </div>
+        </div>
       <% end %>
-
-      <tr id="copyable" class="hidden">
-        <td>
-          <%= form.select "stripes][][color", @pattern.yarn.colors.map { |c| [" #{c['name'].titlecase} (##{c['code']})", c['code']] }, { include_blank: true }, { disabled: true, class: "form-control select-from-palette" } %>
-        </td>
-        <td>
-          <%= form.text_field "stripes][][width", disabled: true, class: "form-control" %>
-        </td>
-        <td>
-          <button type="button" class="remove-stripe btn">Remove</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-    <button type="button" id="add-stripe" class="btn btn-default">Add Stripe</button>
-    <button type="button" id="mirror-existing" class="btn btn-default">Mirror</button>
+    </div>
+    <button type="button" id="mirror-existing" class="btn btn-warning">Mirror</button>
   <% end %>
 
   <hr/>
 
   <div class="actions">
-    <%= form.submit class: "btn" %>
+    <%= form.submit "Save Pattern", class: "btn btn-primary" %>
   </div>
 <% end %>
 
 <script type="text/javascript">
   $(document).ready ( function(){
-    var $copyable = $('#copyable');
-    $('#add-stripe').click(function() {
-      $copyable
-        .clone()
-        .appendTo("#stripes tbody")
-        .removeClass('hidden')
-        .addClass('mirrorable')
-        .find('[disabled]')
-        .attr('disabled', false)
-        .focus();
-    });
-
     $('#mirror-existing').click(function(){
-      if(window.confirm("Are you sure you want to mirror the existing pattern? This might take a few seconds.")) {
-        var stripes = $('table#stripes tr.mirrorable').get().reverse();
+      if(window.confirm("Are you sure you want to mirror the existing pattern? This might take a few seconds. Be sure to save afterwards!")) {
+        var stripes = $('#stripes .row.mirrorable').get().reverse();
         $.each(stripes, function(idx, stripe) {
-          $(stripe).clone().appendTo('#stripes tbody');
+          $(stripe).clone().appendTo('#stripes');
         });
       }
     });
 
     $('body').on('click', '.remove-stripe', function(e){
       var $target = $(e.target);
-      $target.closest('tr').remove();
+      $target.closest('.row').remove();
     });
+
+    $('body').on('click', '.clone-stripe', function(e){
+      var $row = $(e.target).closest('.row');
+      var $clone = $row.clone();
+      $clone.find('select').val($row.find('select').val());
+      $row.after($clone);
+    });
+
 
     $('select#pattern_yarn_id').on('change', function(){
       $('#yarn-change').show();

@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170709180103) do
     t.json "default_colors"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public", default: false, null: false
     t.index ["user_id"], name: "index_patterns_on_user_id"
     t.index ["yarn_id"], name: "index_patterns_on_yarn_id"
   end

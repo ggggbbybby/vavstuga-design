@@ -38,3 +38,5 @@ en:
       yarn:
         name: Yarn Name
         size: Size (number/ply)
+      pattern:
+        public: Public?

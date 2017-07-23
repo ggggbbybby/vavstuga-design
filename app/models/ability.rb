@@ -28,11 +28,12 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
-    if user&.admin?
-      can :manage, :all
-    else
-      can :read, Pattern
-      can :read, Yarn
+    if user.present?
+      can :manage, Pattern, user_id: user.id
+      cannot :publish, Pattern unless user.admin?
+      can :manage, :all if user.admin?
     end
+    can :read, Pattern, public: true
+    can :read, Yarn
   end
 end

@@ -1,10 +1,12 @@
 class PatternsController < ApplicationController
   before_action :set_pattern, only: [:show, :edit, :update, :destroy]
+  authorize_resource
 
   # GET /patterns
   # GET /patterns.json
   def index
-    @patterns = Pattern.all
+    @public_patterns = Pattern.where(public: true)
+    @personal_patterns = Pattern.where(public: false, user_id: current_user&.id)
   end
 
   # GET /patterns/1
@@ -29,7 +31,7 @@ class PatternsController < ApplicationController
 
     respond_to do |format|
       if @pattern.save
-        format.html { redirect_to @pattern, notice: 'Pattern was successfully created.' }
+        format.html { redirect_to edit_pattern_path(@pattern), notice: 'Pattern was successfully created.' }
         format.json { render :show, status: :created, location: @pattern }
       else
         format.html { render :new }
@@ -69,6 +71,6 @@ class PatternsController < ApplicationController
   end
 
   def pattern_params
-    params.require(:pattern).permit(:name, :yarn_id, stripes: [:color, :width])
+    params.require(:pattern).permit(:name, :public, :yarn_id, stripes: [:color, :width])
   end
 end

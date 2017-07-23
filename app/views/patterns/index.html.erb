@@ -1,18 +1,10 @@
-<h1>Patterns</h1>
+<h2>Public Patterns</h2>
+<%= render 'pattern_table', patterns: @public_patterns %>
 
-<table class="table">
-  <tbody>
-    <% @patterns.each do |pattern| %>
-      <tr>
-        <td><%= link_to (pattern.name || "Pattern ##{pattern.id}"), pattern %></td>
-        <% if can?(:manage, Pattern) %>
-          <td><%= link_to 'Edit', edit_pattern_path(pattern) %></td>
-          <td><%#= link_to 'Destroy', pattern, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% unless @personal_patterns.empty? %>
+  <h2>My Patterns</h2>
+  <%= render 'pattern_table', patterns: @personal_patterns %>
+<% end %>
 
 <br>
 

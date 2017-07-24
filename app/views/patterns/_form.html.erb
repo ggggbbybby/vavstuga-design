@@ -22,6 +22,11 @@
     <%= form.label :name %>
     <%= form.text_field :name, class: "form-control" %>
 
+    <% if can?(:publish, Pattern) %>
+      <%= form.label :slug %>
+      <%= form.text_field :slug, class: "form-control" %>
+    <% end %>
+
     <%= form.label :yarn %>
     <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, {}, { id: :pattern_yarn_id, class: "form-control" } %>
     <p id="yarn-change" style="display: none;">

@@ -3,6 +3,7 @@ class Pattern < ApplicationRecord
   belongs_to :yarn
 
   before_save :normalize_stripes
+  after_create :assign_slug
 
   def normalize_stripes
     # input: [{color: '2028', width: 3}]
@@ -31,5 +32,13 @@ class Pattern < ApplicationRecord
     stripes.map do |color, width|
       [color, (width.to_i * 100 / total_width)]
     end
+  end
+
+  def assign_slug
+    self.slug ||= SecureRandom.hex(12)
+  end
+
+  def to_param
+    slug
   end
 end

@@ -11,39 +11,47 @@
     </div>
   <% end %>
 
-  <div class="input-group col-md-4">
-    <% if can?(:publish, Pattern) %>
-      <%= form.label :public do %>
-        Public?
-        <%= form.check_box :public %>
+  <div class="row">
+    <div class="col-md-6">
+      <% if can?(:publish, Pattern) %>
+        <%= form.label :public do %>
+          Public?
+          <%= form.check_box :public %>
+        <% end %>
       <% end %>
-    <% end %>
 
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %>
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
 
-    <% if can?(:publish, Pattern) %>
-      <%= form.label :slug %>
-      <%= form.text_field :slug, class: "form-control" %>
-    <% end %>
+      <% if can?(:publish, Pattern) %>
+        <label for="pattern[slug]">Custom URL</label>
+        <div class="input-group">
+          <div class="input-group-addon">vavstuga.design/patterns/</div>
+          <%= form.text_field :slug, class: "form-control" %>
+        </div>
 
-    <%= form.label :yarn %>
-    <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, {}, { id: :pattern_yarn_id, class: "form-control" } %>
-    <p id="yarn-change" style="display: none;">
-      please save and re-open this page after changing the yarn type
-    </p>
+      <% end %>
+
+      <%= form.label :yarn %>
+      <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, {}, { id: :pattern_yarn_id, class: "form-control" } %>
+      <p id="yarn-change" style="display: none;">
+        please save and re-open this page after changing the yarn type
+      </p>
+    </div>
   </div>
 
-  <% unless pattern.new_record? %>
 
-    <div id="colorPalette">
-      <h4>Color Palette</h4>
-      <div id="paletteSwatches">
+  <% unless pattern.new_record? %>
+    <div class="row">
+      <div id="colorPalette">
+        <h4>Color Palette</h4>
+        <div id="paletteSwatches">
+        </div>
+        <%= select_tag "color-palette",
+                       options_for_select(@pattern.yarn.color_options, @pattern.default_colors.values),
+                       multiple: true, class: :multiselect, id: "colorPalette"
+        %>
       </div>
-      <%= select_tag "color-palette",
-                     options_for_select(@pattern.yarn.color_options, @pattern.default_colors.values),
-                     multiple: true, class: :multiselect, id: "colorPalette"
-      %>
     </div>
 
     <hr />

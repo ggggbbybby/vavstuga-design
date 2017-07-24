@@ -17,7 +17,9 @@ $(document).ready ( function(){
     swatch.attr('title', color.name);
     $("#swatches").append(swatch);
   };
-  $.each(colors, createSwatch);
+  if (typeof(colors) !== "undefined") {
+    $.each(colors, createSwatch);
+  }
 
   var selectColor = function(e) {
     resetSelectedColor();
@@ -46,6 +48,9 @@ $(document).ready ( function(){
     $.each(defaults, pickColor);
     resetSelectedColor();
   };
-  setDefaults();
-  $('#reset-defaults').click(setDefaults);
+
+  if(typeof(defaults) !== "undefined") {
+    setDefaults();
+    $('#reset-defaults').click(setDefaults);
+  }
 })

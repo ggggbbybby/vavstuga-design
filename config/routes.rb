@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :yarns
   resources :patterns
   resources :users
+  get "about" => "pages#about"
   root to: "patterns#index"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -3,7 +3,7 @@ class Pattern < ApplicationRecord
   belongs_to :yarn
 
   before_save :normalize_stripes
-  after_create :assign_slug
+  before_save :assign_slug
 
   def normalize_stripes
     # input: [{color: '2028', width: 3}]

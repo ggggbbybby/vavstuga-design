@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 #swatches {
   width: 100%;
+  max-width: 740px; // ten swatches in a row
   display: flex;
   flex-wrap: wrap;
 }
@@ -23,6 +24,7 @@
 .swatch {
   width: 70px;
   height: 70px;
+  margin: 2px;
 }
 
 .swatch.selected {

@@ -2,10 +2,10 @@
   <tbody>
   <% patterns.each do |pattern| %>
     <tr>
-      <td><%= link_to (pattern.name || "Pattern ##{pattern.id}"), pattern %></td>
+      <td><%= link_to((pattern.name || "Pattern ##{pattern.id}"), pattern_path(pattern.id)) %></td>
       <% if can?(:manage, pattern) %>
-        <td><%= link_to 'Edit', edit_pattern_path(pattern) %></td>
-        <td><%= link_to 'Destroy', pattern, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_pattern_path(pattern.id) %></td>
+        <td><%= link_to 'Destroy', pattern_path(pattern.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tr>
   <% end %>

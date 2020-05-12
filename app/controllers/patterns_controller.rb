@@ -34,7 +34,7 @@ class PatternsController < ApplicationController
 
     respond_to do |format|
       if @pattern.save
-        format.html { redirect_to edit_pattern_path(@pattern), notice: 'Pattern was successfully created.' }
+        format.html { redirect_to edit_pattern_path(@pattern.id), notice: 'Pattern was successfully created.' }
         format.json { render :show, status: :created, location: @pattern }
       else
         format.html { render :new }

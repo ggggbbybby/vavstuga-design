@@ -6,6 +6,11 @@
   <%= render 'pattern_table', patterns: @personal_patterns %>
 <% end %>
 
+<% if @all_patterns %>
+  <h2>[Admins] All Patterns</h2>
+  <%= render 'pattern_table', patterns: @all_patterns %>
+<% end %>
+
 <br>
 
 <% if can?(:create, Pattern) %>

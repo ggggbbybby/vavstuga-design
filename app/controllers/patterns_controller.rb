@@ -7,6 +7,9 @@ class PatternsController < ApplicationController
   def index
     @public_patterns = Pattern.where(public: true)
     @personal_patterns = Pattern.where(public: false, user_id: current_user&.id)
+    if current_user&.admin?
+      @all_patterns = Pattern.all 
+    end
   end
 
   # GET /patterns/1
@@ -67,7 +70,7 @@ class PatternsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_pattern
-    @pattern = Pattern.find(params[:id]) || Pattern.find_by(slug: params[:id])
+    @pattern = Pattern.find_by(id: params[:id]) || Pattern.find_by(slug: params[:id])
   end
 
   def pattern_params

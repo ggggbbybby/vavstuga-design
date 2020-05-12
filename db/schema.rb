@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(version: 20170724050520) do
     t.string "name"
     t.json "stripes"
     t.json "default_colors"
+    t.boolean "public"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "public", default: false, null: false
     t.string "slug"
     t.index ["user_id"], name: "index_patterns_on_user_id"
     t.index ["yarn_id"], name: "index_patterns_on_yarn_id"

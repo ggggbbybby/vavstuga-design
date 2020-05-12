@@ -67,7 +67,7 @@ class PatternsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_pattern
-    @pattern = Pattern.find_by(slug: params[:id])
+    @pattern = Pattern.find(params[:id]) || Pattern.find_by(slug: params[:id])
   end
 
   def pattern_params

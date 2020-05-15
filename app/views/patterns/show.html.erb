@@ -1,5 +1,5 @@
 <% if can?(:edit, @pattern) %>
-  <%= link_to 'Edit', edit_pattern_path(@pattern) if can?(:edit, @pattern) %> |
+  <%= link_to 'Edit', edit_pattern_path(@pattern.id) if can?(:edit, @pattern) %> |
 <% end %>
 <%= link_to 'Back', patterns_path %>
 

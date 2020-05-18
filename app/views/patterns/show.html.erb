@@ -1,10 +1,17 @@
-<% if can?(:edit, @pattern) %>
-  <%= link_to 'Edit', edit_pattern_path(@pattern.id) if can?(:edit, @pattern) %> |
-<% end %>
-<%= link_to 'Back', patterns_path %>
+
+<div class="breadcrumbs">
+  <% if request.referrer =~ /store\.vavstuga\.com/ %>
+    <%= link_to "Vävstuga Store", "https://store.vavstuga.com/" %>
+    > 
+    <%= link_to @pattern.name, (request.referrer || patterns_path) %>
+    > Choose Warp Colors
+  <% end %>
+</div>
 
 <h3><%= @pattern.name %></h3>
-
+<% if can?(:edit, @pattern) %>
+  <%= link_to 'Edit', edit_pattern_path(@pattern.id) if can?(:edit, @pattern) %>
+<% end %>
 <div class="flex-container stripes">
   <% @pattern.scaled_stripes.each do |color, width| %>
     <span class="stripe color-<%= color %>" data-stripe="<%= color %>" style="width:<%= width %>%;"></span>

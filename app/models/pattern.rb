@@ -37,8 +37,4 @@ class Pattern < ApplicationRecord
   def assign_slug
     self.slug ||= SecureRandom.hex(12)
   end
-
-  def to_param
-    slug
-  end
 end

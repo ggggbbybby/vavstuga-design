@@ -5,8 +5,8 @@ class PatternsController < ApplicationController
   # GET /patterns
   # GET /patterns.json
   def index
-    @public_patterns = Pattern.where(public: true)
-    @personal_patterns = Pattern.where(public: false, user_id: current_user&.id)
+    @public_patterns = Pattern.where(public: true).order(:name)
+    @personal_patterns = Pattern.where(public: false, user_id: current_user&.id).order(:name)
     if current_user&.admin?
       @all_patterns = Pattern.all.order(:name)
     end

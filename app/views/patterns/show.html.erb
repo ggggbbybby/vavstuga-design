@@ -1,10 +1,13 @@
 
 <div class="breadcrumbs">
-  <% if request.referrer =~ /store\.vavstuga\.com/ %>
+  <% if @pattern.has_breadcrumbs? %>
     <%= link_to "Vävstuga Store", "https://store.vavstuga.com/" %>
-    > 
-    <%= link_to @pattern.name, (request.referrer || patterns_path) %>
-    > Choose Warp Colors
+    »
+    <%= link_to "Warps to Go", "https://store.vavstuga.com/category/togo.html" %>
+    »
+    <%= link_to "#{@pattern.category&.capitalize} to go", @pattern.vavstuga_category_url %>
+    »
+    <%= link_to "#{@pattern.name}, choose warp colors", @pattern.vavstuga_product_url %>
   <% end %>
 </div>
 

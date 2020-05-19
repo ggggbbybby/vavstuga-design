@@ -37,4 +37,21 @@ class Pattern < ApplicationRecord
   def assign_slug
     self.slug ||= SecureRandom.hex(12)
   end
+
+
+  def has_breadcrumbs?
+    vavstuga_product_url.present? && vavstuga_category_url.present? && category.present?
+  end
+
+  def category
+    case name
+    when /Towels? #\d+/
+      "Towels"
+    when /Blankets? #\d+/
+      "Blankets"
+    else
+      ""
+    end
+  end
+
 end

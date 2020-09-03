@@ -10,13 +10,16 @@ class Pattern < ApplicationRecord
     # output:
     #   stripes: [['a', 3]]
     #   default_colors: { a: '2028' }
+
+    # if we're saving this from console or wherever, do not overwrite the existing ones.
+    return if stripes.all? { |stripe| stripe.is_a?(Array) }
+
     normalized = []
     mapping = {}
     current_color = 'a'
     self.stripes ||= []
 
     stripes.each do |stripe|
-      next if stripe.is_a?(Array) # these stripes are already normalized, only do this if we get the hash-stripes
       if mapping[stripe["color"]].nil?
         mapping[stripe["color"]] = current_color
         current_color = current_color.next

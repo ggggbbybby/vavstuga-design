@@ -16,6 +16,7 @@ class Pattern < ApplicationRecord
     self.stripes ||= []
 
     stripes.each do |stripe|
+      next if stripe.is_a?(Array) # these stripes are already normalized, only do this if we get the hash-stripes
       if mapping[stripe["color"]].nil?
         mapping[stripe["color"]] = current_color
         current_color = current_color.next

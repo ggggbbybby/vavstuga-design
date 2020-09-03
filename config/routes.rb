@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :yarns
-  resources :patterns
+  resources :patterns do
+    post 'duplicate', on: :member
+  end
   resources :users
   get "about" => "pages#about"
   root to: "patterns#index"

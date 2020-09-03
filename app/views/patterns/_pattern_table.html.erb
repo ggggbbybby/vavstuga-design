@@ -6,6 +6,7 @@
       <% if can?(:manage, pattern) %>
         <td><%= link_to 'Edit', edit_pattern_path(pattern.id) %></td>
         <td><%= link_to 'Destroy', pattern_path(pattern.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Duplicate', duplicate_pattern_path(pattern.id), method: :post %></td>
       <% end %>
     </tr>
   <% end %>

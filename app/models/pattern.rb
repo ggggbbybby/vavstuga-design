@@ -58,4 +58,12 @@ class Pattern < ApplicationRecord
     end
   end
 
+  def self.duplicate!(pattern)
+    pattern.dup.tap do |duped|
+      duped.name = pattern.name + " (duplicate)"
+      duped.slug = nil
+      duped.save!
+    end
+  end
+
 end

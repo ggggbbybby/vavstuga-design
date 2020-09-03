@@ -1,5 +1,5 @@
 class PatternsController < ApplicationController
-  before_action :set_pattern, only: [:show, :edit, :update, :destroy]
+  before_action :set_pattern, only: [:show, :edit, :update, :destroy, :duplicate]
   authorize_resource
 
   # GET /patterns
@@ -64,6 +64,16 @@ class PatternsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to patterns_url, notice: 'Pattern was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+
+  # POST /patterns/1/duplicate
+  def duplicate
+    copy = Pattern.duplicate!(@pattern)
+    respond_to do |format|
+      format.html { redirect_to edit_pattern_path(copy.id), notice: "Duplicated from #{@pattern.name}"}
+      format.json { render :show, status: :created, location: copy }
     end
   end
 

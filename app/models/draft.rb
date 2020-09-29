@@ -4,7 +4,7 @@ class Draft < ApplicationRecord
 
   before_save :assign_slug
 
-  PIXEL_SIZE = 10
+  PIXEL_SIZE = 25
 
   def assign_slug
     self.slug ||= SecureRandom.hex(12)
@@ -29,11 +29,56 @@ class Draft < ApplicationRecord
   end
 
   def threading
-    draft.with_indifferent_access[:warp]
+    draft['warp']
   end
 
   def treadling
-    draft.with_indifferent_access[:weft]
+    draft['weft']
+  end
+
+  def color_palette
+    (draft['warp_colors'].values + draft['weft_colors'].values).sort.uniq
+  end
+
+  def warp_pattern
+    memo = []
+    pos_x = warp_pixel_width - PIXEL_SIZE
+    threading.each_with_index do |thread, idx|
+      thread_color = draft['warp_colors'][idx.to_s] || draft['warp_colors']['default']
+      if memo.last && memo.last[:color] == thread_color
+        memo.last[:width] += PIXEL_SIZE
+        memo.last[:x] -= PIXEL_SIZE
+      else 
+        memo << { x: pos_x, width: PIXEL_SIZE, color: thread_color }
+      end
+      pos_x -= PIXEL_SIZE
+    end
+    memo
+  end
+
+  def warp_pixel_width
+    threading.length * PIXEL_SIZE
+  end
+
+  def weft_pattern
+    memo = []
+    pos_y = weft_pixel_height - PIXEL_SIZE
+
+    treadling.each_with_index do |thread, idx|
+      thread_color = draft['weft_colors'][idx.to_s] || draft['weft_colors']['default']
+      if memo.last && memo.last[:color] == thread_color
+        memo.last[:height] += PIXEL_SIZE
+        memo.last[:y] -= PIXEL_SIZE
+      else
+        memo << { y: pos_y, height: PIXEL_SIZE, color: thread_color }
+      end
+      pos_y -= PIXEL_SIZE
+    end
+    memo
+  end
+
+  def weft_pixel_height
+    treadling.length * PIXEL_SIZE
   end
 
   def mask_path

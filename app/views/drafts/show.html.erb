@@ -5,30 +5,40 @@
     window.draft = <%= @draft.to_json.html_safe %>
   <% end %>
   
-  <svg id="drawdown" width="141" height="141" xmlns="http://www.w3.org/2000/svg">
+  <svg id="drawdown" width="<%=@draft.warp_pixel_width%>" height="<%=@draft.weft_pixel_height%>" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="gray" stroke-width="0.5"/>
+      <pattern id="grid" width="<%=Draft::PIXEL_SIZE%>" height="<%=Draft::PIXEL_SIZE%>" patternUnits="userSpaceOnUse">
+        <path d="M <%=Draft::PIXEL_SIZE%> 0 L 0 0 0 <%=Draft::PIXEL_SIZE%>" fill="none" stroke="gray" stroke-width="0.5"/>
       </pattern>
-      <pattern id="warp" width="50" height="50" patternUnits="userSpaceOnUse">
-        <image xlink:href="https://store.vavstuga.com/mm5/graphics/00000001/th-yarn-bock-cot-lin-22-2-2000.jpg"></image>
+      <% @draft.color_palette.each do |colorcode| %>
+        <pattern id="color-<%=colorcode%>" width="50" height="50" patternUnits="userSpaceOnUse">
+          <image xlink:href="https://store.vavstuga.com/mm5/graphics/00000001/th-yarn-bock-cot-lin-22-2-<%=colorcode%>.jpg"></image>
+        </pattern>
+      <% end %>
+
+      <pattern id="warp" width="<%=@draft.warp_pixel_width%>" height="50" patternUnits="userSpaceOnUse">
+        <% @draft.warp_pattern.each do |warp_block| %>
+          <rect x="<%=warp_block[:x]%>" y="0" width="<%=warp_block[:width]%>" height="50" fill="url(#color-<%=warp_block[:color]%>)" />
+        <% end %>
       </pattern>
-      <pattern id="weft" width="50" height="50" patternUnits="userSpaceOnUse">
-        <image xlink:href="https://store.vavstuga.com/mm5/graphics/00000001/th-yarn-bock-cot-lin-22-2-2020.jpg"></image>
+
+      <pattern id="weft" width="50" height="<%=@draft.weft_pixel_height%>" patternUnits="userSpaceOnUse">
+        <% @draft.weft_pattern.each do |weft_block| %>
+          <rect x="0" y="<%=weft_block[:y]%>" width="50" height="<%=weft_block[:height]%>" fill="url(#color-<%=weft_block[:color]%>)" />
+        <% end %>
       </pattern>
     </defs>
 
-    <mask id="profile">
-      <rect x="0" y="0" width="110" height="110" fill="white" />
+    <mask id="profile_draft">
+      <rect x="0" y="0" width="<%=@draft.warp_pixel_width%>" height="<%=@draft.weft_pixel_height%>" fill="white" />
       <path d="<%= @draft.mask_path %>" fill="black" />
     </mask>
     
-    <rect x="1" y="1" width="109" height="109" fill="url(#warp)"/>
-    <rect x="1" y="1" width="109" height="109" fill="url(#weft)" mask="url(#profile)"/>
+    <rect x="0" y="0" width="<%=@draft.warp_pixel_width%>" height="<%=@draft.weft_pixel_height%>" fill="url(#warp)"/>
+    <rect x="0" y="0" width="<%=@draft.warp_pixel_width%>" height="<%=@draft.weft_pixel_height%>" fill="url(#weft)" mask="url(#profile_draft)"/>
 
-    <rect x="1" y="1" width="109" height="109" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
-    <rect x="120" y="1" width="20" height="109" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
-    <rect x="1" y="120" width="109" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
-    <rect x="120" y="120" width="20" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
+    <rect x="0" y="0" width="<%=@draft.warp_pixel_width%>" height="<%=@draft.weft_pixel_height%>" fill="url(#grid)"/>
   </svg>
 </main>
+
+<pre id="notifications"></pre>

@@ -10,4 +10,8 @@ class Yarn < ApplicationRecord
       ["#{color['name'].titlecase} (##{color['code']})", color['code']]
     end
   end
+
+  def self.to_options
+    Yarn.all.map { |y| [y.display_name, y.id] }
+  end
 end

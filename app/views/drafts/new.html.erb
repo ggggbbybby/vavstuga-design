@@ -1,0 +1,14 @@
+<h2> New Draft </h2>
+
+<%= form_with(model: @draft) do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name, class: "form-control" %>
+  <%= form.label :slug %>
+  <%= form.text_field :slug, class: "form-control" %>
+  
+  <%= form.label :yarn %>
+  <%= form.select :yarn_id, Yarn.to_options, {}, {id: :draft_yarn_id, class: "form-control" } %>
+
+  <%= form.submit "Save Draft", class: "btn btn-primary" %>
+
+<% end %>

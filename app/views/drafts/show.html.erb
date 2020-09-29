@@ -1,0 +1,34 @@
+<h2>yer a wizard harry</h2>
+
+<main>
+  <%= javascript_tag do %>
+    window.draft = <%= @draft.to_json.html_safe %>
+  <% end %>
+  
+  <svg id="drawdown" width="141" height="141" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="gray" stroke-width="0.5"/>
+      </pattern>
+      <pattern id="warp" width="50" height="50" patternUnits="userSpaceOnUse">
+        <image xlink:href="https://store.vavstuga.com/mm5/graphics/00000001/th-yarn-bock-cot-lin-22-2-2000.jpg"></image>
+      </pattern>
+      <pattern id="weft" width="50" height="50" patternUnits="userSpaceOnUse">
+        <image xlink:href="https://store.vavstuga.com/mm5/graphics/00000001/th-yarn-bock-cot-lin-22-2-2020.jpg"></image>
+      </pattern>
+    </defs>
+
+    <mask id="profile">
+      <rect x="0" y="0" width="110" height="110" fill="white" />
+      <path d="<%= @draft.mask_path %>" fill="black" />
+    </mask>
+    
+    <rect x="1" y="1" width="109" height="109" fill="url(#warp)"/>
+    <rect x="1" y="1" width="109" height="109" fill="url(#weft)" mask="url(#profile)"/>
+
+    <rect x="1" y="1" width="109" height="109" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
+    <rect x="120" y="1" width="20" height="109" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
+    <rect x="1" y="120" width="109" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
+    <rect x="120" y="120" width="20" height="20" fill="url(#grid)" stroke="black" stroke-width="0.5"/>
+  </svg>
+</main>

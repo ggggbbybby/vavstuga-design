@@ -1,0 +1,13 @@
+<h2>Profile Drafts</h2>
+
+<ol>
+    <% @drafts.each do |draft| %>
+        <li>
+            <%= draft.name || "Draft ##{draft.id}" %>
+        </li>
+    <% end %>
+</ol>
+    
+<% if can?(:create, Draft) %>
+  <%= link_to 'New Draft', new_draft_path %>
+<% end %>

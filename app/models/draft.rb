@@ -36,6 +36,14 @@ class Draft < ApplicationRecord
     draft['weft']
   end
 
+  def shafts
+    threading.max
+  end
+
+  def treadles
+    treadling.max
+  end
+
   def color_palette
     (draft['warp_colors'].values + draft['weft_colors'].values).sort.uniq
   end
@@ -85,7 +93,7 @@ class Draft < ApplicationRecord
     warp_width = threading.length
     warp_length = treadling.length
 
-    path = "m #{warp_width*PIXEL_SIZE},#{warp_length*PIXEL_SIZE}"
+    path = "M #{warp_width*PIXEL_SIZE},#{warp_length*PIXEL_SIZE}"
     threading.each do |warp_thread|
       treadling.each do |treadle|
         if warp_thread != treadle
@@ -97,4 +105,24 @@ class Draft < ApplicationRecord
     end
     path
   end
+
+  def threading_path
+    init_move = "M #{warp_pixel_width},#{weft_pixel_height + PIXEL_SIZE}"
+    threading.each_with_object(init_move) do |warp, path|
+      path << "\nm 0,#{PIXEL_SIZE * (warp-1)}"
+      path << "\nv#{PIXEL_SIZE},h-#{PIXEL_SIZE},v-#{PIXEL_SIZE},h#{PIXEL_SIZE}"
+      path << "\nm -#{PIXEL_SIZE},-#{PIXEL_SIZE * (warp-1)}"
+    end
+  end
+
+  def treadling_path
+    init_move = "M #{warp_pixel_width + PIXEL_SIZE},#{weft_pixel_height}"
+    treadling.each_with_object([init_move]) do |weft, path|
+      path << "m #{PIXEL_SIZE * (weft-1)},0"
+      path << "v -#{PIXEL_SIZE}, h #{PIXEL_SIZE}, v #{PIXEL_SIZE},h -#{PIXEL_SIZE}"
+      path << "m -#{PIXEL_SIZE * (weft-1)}, -#{PIXEL_SIZE}"
+    end.join("\n")
+  end
+
+
 end

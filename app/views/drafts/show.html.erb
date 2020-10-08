@@ -5,7 +5,7 @@
     window.draft = <%= @draft.to_json.html_safe %>
   <% end %>
   
-  <svg id="drawdown" width="<%=@draft.warp_pixel_width%>" height="<%=@draft.weft_pixel_height%>" xmlns="http://www.w3.org/2000/svg">
+  <svg id="drawdown" width="<%=@draft.warp_pixel_width + ((3 + @draft.treadles) * Draft::PIXEL_SIZE) + 1 %>" height="<%=@draft.weft_pixel_height + ((3 + @draft.shafts) * Draft::PIXEL_SIZE) + 1%>" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <pattern id="grid" width="<%=Draft::PIXEL_SIZE%>" height="<%=Draft::PIXEL_SIZE%>" patternUnits="userSpaceOnUse">
         <path d="M <%=Draft::PIXEL_SIZE%> 0 L 0 0 0 <%=Draft::PIXEL_SIZE%>" fill="none" stroke="gray" stroke-width="0.5"/>
@@ -38,7 +38,29 @@
     <rect x="0" y="0" width="<%=@draft.warp_pixel_width%>" height="<%=@draft.weft_pixel_height%>" fill="url(#weft)" mask="url(#profile_draft)"/>
 
     <rect x="0" y="0" width="<%=@draft.warp_pixel_width%>" height="<%=@draft.weft_pixel_height%>" fill="url(#grid)"/>
+
+    <rect id="threading" x="0" y="<%=@draft.weft_pixel_height + Draft::PIXEL_SIZE%>" width="<%=@draft.warp_pixel_width + 1%>" height="<%=1 + @draft.shafts*Draft::PIXEL_SIZE%>" fill="url(#grid)" />
+    <path d="<%= @draft.threading_path %>" fill="red" />
+    <rect id="threading-colors" x="0" y="<%= @draft.weft_pixel_height + ((2 + @draft.shafts) * Draft::PIXEL_SIZE)%>" width="<%=@draft.warp_pixel_width+1%>" height="<%= Draft::PIXEL_SIZE + 1%>" fill="url(#grid)"/>
+
+    <rect id="treadling" x="<%=@draft.warp_pixel_width + Draft::PIXEL_SIZE%>" y="0" width="<%=1 + @draft.treadles * Draft::PIXEL_SIZE%>" height="<%=1 + @draft.weft_pixel_height %>" fill="url(#grid)" />
+    <path d="<%=@draft.treadling_path %>" fill="red" />
+
+    <rect id="treadling-colors" x="<%=@draft.warp_pixel_width + ((2 + @draft.treadles) * Draft::PIXEL_SIZE)%>" y="0" width="<%=Draft::PIXEL_SIZE + 1%>" height="<%=@draft.weft_pixel_height + 1%>" fill="url(#grid)" />
+    
   </svg>
+
+  <br/>
+  <p>
+    <a href="#" id="reset-defaults">
+      Reset Default Colors
+    </a>
+  </p>
+
+  <p>
+    Click on one of the swatches below, then click on a stripe to change the color.
+  </p>
+  <div id="swatches">
+  </div>
 </main>
 
-<pre id="notifications"></pre>

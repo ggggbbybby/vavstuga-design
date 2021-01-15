@@ -8,7 +8,7 @@ class DraftsController < ApplicationController
     end
 
     def show
-      # render @draft 
+      # render @draft
     end
 
     def new
@@ -30,6 +30,7 @@ class DraftsController < ApplicationController
     private
     def set_draft
         @draft = Draft.find_by(id: params[:id]) || Draft.find_by(slug: params[:id])
+        @yarn = @draft&.yarn
     end
 
     def draft_params

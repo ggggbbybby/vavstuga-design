@@ -4,7 +4,7 @@ class Draft < ApplicationRecord
 
   before_save :assign_slug
 
-  PIXEL_SIZE = 25
+  PIXEL_SIZE = 15
 
   def assign_slug
     self.slug ||= SecureRandom.hex(12)
@@ -108,11 +108,11 @@ class Draft < ApplicationRecord
 
   def threading_path
     init_move = "M #{warp_pixel_width},#{weft_pixel_height + PIXEL_SIZE}"
-    threading.each_with_object(init_move) do |warp, path|
-      path << "\nm 0,#{PIXEL_SIZE * (warp-1)}"
-      path << "\nv#{PIXEL_SIZE},h-#{PIXEL_SIZE},v-#{PIXEL_SIZE},h#{PIXEL_SIZE}"
-      path << "\nm -#{PIXEL_SIZE},-#{PIXEL_SIZE * (warp-1)}"
-    end
+    threading.each_with_object([init_move]) do |warp, path|
+      path << "m 0,#{PIXEL_SIZE * (warp-1)}"
+      path << "v #{PIXEL_SIZE}, h -#{PIXEL_SIZE}, v -#{PIXEL_SIZE}, h #{PIXEL_SIZE}"
+      path << "m -#{PIXEL_SIZE}, -#{PIXEL_SIZE * (warp-1)}"
+    end.join("\n")
   end
 
   def treadling_path

@@ -12,7 +12,7 @@ class Pattern < ApplicationRecord
     #   default_colors: { a: '2028' }
 
     # if we're saving this from console or wherever, do not overwrite the existing ones.
-    return if stripes.all? { |stripe| stripe.is_a?(Array) }
+    return if stripes.nil? || stripes.all? { |stripe| stripe.is_a?(Array) }
 
     normalized = []
     mapping = {}

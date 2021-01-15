@@ -31,6 +31,7 @@ class PatternsController < ApplicationController
   def create
     @pattern = Pattern.new(pattern_params)
     @pattern.user = current_user || User.first
+    @pattern.stripes ||= []
 
     respond_to do |format|
       if @pattern.save
@@ -81,6 +82,8 @@ class PatternsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_pattern
     @pattern = Pattern.find_by(id: params[:id]) || Pattern.find_by(slug: params[:id])
+    @yarn = @pattern&.yarn
+    @default_colors = @pattern&.default_colors
   end
 
   def pattern_params

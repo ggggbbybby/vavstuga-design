@@ -48,6 +48,9 @@ class Pattern < ApplicationRecord
   end
 
   def category
+    return vavstuga_category_name if vavstuga_category_name.present?
+
+    # old hard-coded logic for towels and blankets
     case name
     when /Towels? #\d+/
       "Towels"

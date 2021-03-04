@@ -53,9 +53,21 @@ class Pattern < ApplicationRecord
     # old hard-coded logic for towels and blankets
     case name
     when /Towels? #\d+/
-      "Towels"
+      "Towels to go"
     when /Blankets? #\d+/
-      "Blankets"
+      "Blankets to go"
+    else
+      ""
+    end
+  end
+
+  def product_name
+    return vavstuga_product_name if vavstuga_product_name.present?
+
+    # keep the old behavior
+    case name
+    when /(Towels?|Blankets?) #\d+/
+      "#{name}, choose warp colors"
     else
       ""
     end

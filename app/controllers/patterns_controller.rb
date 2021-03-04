@@ -89,6 +89,6 @@ class PatternsController < ApplicationController
   end
 
   def pattern_params
-    params.require(:pattern).permit(:name, :slug, :public, :yarn_id, :vavstuga_product_url, :vavstuga_category_url, :vavstuga_category_name, stripes: [:color, :width])
+    params.require(:pattern).permit(:name, :slug, :public, :yarn_id, :vavstuga_product_url, :vavstuga_product_name, :vavstuga_category_url, :vavstuga_category_name, stripes: [:color, :width])
   end
 end

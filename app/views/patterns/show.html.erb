@@ -5,9 +5,9 @@
     »
     <%= link_to "Warps to Go", "https://store.vavstuga.com/category/togo.html" %>
     »
-    <%= link_to "#{@pattern.category&.capitalize} to go", @pattern.vavstuga_category_url %>
+    <%= link_to "#{@pattern.category}", @pattern.vavstuga_category_url %>
     »
-    <%= link_to "#{@pattern.name}, choose warp colors", @pattern.vavstuga_product_url %>
+    <%= link_to "#{@pattern.product_name}", @pattern.vavstuga_product_url %>
   <% end %>
 </div>
 

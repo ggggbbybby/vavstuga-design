@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210304004517) do
+ActiveRecord::Schema.define(version: 20210304031509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20210304004517) do
     t.string "vavstuga_product_url"
     t.string "vavstuga_category_url"
     t.string "vavstuga_category_name"
+    t.string "vavstuga_product_name"
     t.index ["user_id"], name: "index_patterns_on_user_id"
     t.index ["yarn_id"], name: "index_patterns_on_yarn_id"
   end

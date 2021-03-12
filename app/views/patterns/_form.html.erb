@@ -20,25 +20,38 @@
         <% end %>
       <% end %>
 
-      <%= form.label :name %>
-      <%= form.text_field :name, class: "form-control" %>
+      <div class="form-group">
+        <%= form.label :name %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
 
       <% if can?(:publish, Pattern) %>
         <label for="pattern[slug]">Custom URL</label>
-        <div class="input-group">
-          <div class="input-group-addon">vavstuga.design/patterns/</div>
+        <div class="input-group form-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">vavstuga.design/patterns/</div>
+          </div>
           <%= form.text_field :slug, class: "form-control" %>
         </div>
 
-        <label for="pattern[vavstuga_category_url]">Store Category Page</label>
-        <%= form.text_field :vavstuga_category_url, class: "form-control" %>
-        
-        <label for="pattern[vavstuga_product_url]">Store Product Page</label>
-        <%= form.text_field :vavstuga_product_url, class: "form-control" %>
+        <b> Breadcrumbs </b>
+        <div class="form-group">
+          <label for="pattern[vavstuga_category_name]">Store Category Name</label>
+          <%= form.text_field :vavstuga_category_name, class: "form-control" %>
+          <label for="pattern[vavstuga_category_url]">Store Category Page</label>
+          <%= form.text_field :vavstuga_category_url, class: "form-control" %>
+
+          <label for="pattern[vavstuga_product_name]">Store Product Name</label>
+          <%= form.text_field :vavstuga_product_name, class: "form-control" %>        
+          <label for="pattern[vavstuga_product_url]">Store Product Page</label>
+          <%= form.text_field :vavstuga_product_url, class: "form-control" %>
+        </div>
       <% end %>
 
-      <%= form.label :yarn %>
-      <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, {}, { id: :pattern_yarn_id, class: "form-control" } %>
+      <div class="form-group">
+        <%= form.label :yarn %>
+        <%= form.select :yarn_id, Yarn.all.map {|y| [ y.display_name, y.id ] }, {}, { id: :pattern_yarn_id, class: "form-control" } %>
+      </div>
       <p id="yarn-change" style="display: none;">
         please save and re-open this page after changing the yarn type
       </p>

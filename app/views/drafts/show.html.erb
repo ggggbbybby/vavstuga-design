@@ -4,15 +4,16 @@
   <%= javascript_tag do %>
     window.draft = <%= @draft.to_json.html_safe %>
   <% end %>
-  
+
   <svg id="drawdown" width="<%=@draft.warp_pixel_width + ((3 + @draft.treadles) * Draft::PIXEL_SIZE) + 1 %>" height="<%=@draft.weft_pixel_height + ((3 + @draft.shafts) * Draft::PIXEL_SIZE) + 1%>" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <pattern id="grid" width="<%=Draft::PIXEL_SIZE%>" height="<%=Draft::PIXEL_SIZE%>" patternUnits="userSpaceOnUse">
         <path d="M <%=Draft::PIXEL_SIZE%> 0 L 0 0 0 <%=Draft::PIXEL_SIZE%>" fill="none" stroke="gray" stroke-width="0.5"/>
       </pattern>
+
       <% @draft.color_palette.each do |colorcode| %>
-        <pattern id="color-<%=colorcode%>" width="50" height="50" patternUnits="userSpaceOnUse">
-          <image xlink:href="https://store.vavstuga.com/mm5/graphics/00000001/th-yarn-bock-cot-lin-22-2-<%=colorcode%>.jpg"></image>
+        <pattern id="color-<%=colorcode%>" width="70" height="70" patternUnits="userSpaceOnUse">
+          <image xlink:href="<%=@draft.yarn.url%>-<%=colorcode%>.jpg"></image>
         </pattern>
       <% end %>
 
@@ -48,7 +49,6 @@
     <path d="<%=@draft.treadling_path %>" fill="black" />
 
     <rect id="treadling-colors" x="<%=@draft.warp_pixel_width + ((2 + @draft.treadles) * Draft::PIXEL_SIZE)%>" y="0" width="<%=Draft::PIXEL_SIZE + 1%>" height="<%=@draft.weft_pixel_height + 1%>" fill="url(#weft)" />
-    
   </svg>
 
   <br/>

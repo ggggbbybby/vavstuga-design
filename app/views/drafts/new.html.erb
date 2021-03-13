@@ -1,4 +1,4 @@
-<h2> New Draft </h2>
+<h2> New Draft Setup </h2>
 
 <%= form_with(model: @draft) do |form| %>
   <%= form.label :name %>
@@ -8,6 +8,14 @@
   
   <%= form.label :yarn %>
   <%= form.select :yarn_id, Yarn.to_options, {}, {id: :draft_yarn_id, class: "form-control" } %>
+
+  <%= form.fields_for :draft do |draft_f| %>
+    <%= draft_f.label :shaft_count %>
+    <%= draft_f.number_field :shaft_count, class: "form-control", value: 4 %>
+
+    <%= draft_f.label :treadle_count %>
+    <%= draft_f.number_field :treadle_count, class: "form-control", value: 4 %>
+  <% end %>
 
   <%= form.submit "Save Draft", class: "btn btn-primary" %>
 

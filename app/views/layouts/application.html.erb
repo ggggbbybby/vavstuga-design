@@ -57,6 +57,7 @@
   <% end %>
 
   <div class="container">
+    <input id="selected-color" type="hidden" />
     <%= yield %>
   </div>
 
@@ -69,7 +70,7 @@
     <% if @yarn %>
       var colors = <%= @yarn.colors.to_json.html_safe %>;
       var bg = function(color) {
-        return `url("https://store.vavstuga.com/mm5/graphics/00000001/<%= @yarn.slug %>-${color}.jpg")`
+        return `url("<%= @yarn.url %>-${color}.jpg")`
       };
 
       var colorName = function(color_code) {

@@ -1,6 +1,11 @@
 class Yarn < ApplicationRecord
   has_many :patterns
 
+  URL_PREFIX = "https://store.vavstuga.com/mm5/graphics/00000001/"
+  def url
+    URL_PREFIX + slug
+  end
+
   def display_name
     "#{size} #{name}"
   end

@@ -25,6 +25,7 @@ $(document).ready ( function(){
     resetSelectedColor();
     selectedColor = e.target.dataset.color;
     $(e.target).addClass('selected');
+    $('#selected-color').val(selectedColor);
   };
 
   var resetSelectedColor = function() {

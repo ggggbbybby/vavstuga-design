@@ -18,6 +18,7 @@ $(document).ready(function () {
       const warp_block_idx = are_you_editing ? thread_idx : draft.warp_blocks[thread_idx];
       const warp_pattern = $(`#warp-block-${warp_block_idx}`);
       warp_pattern.attr('fill', `url(#color-${new_color})`)
+      draft.draft.warp_colors[thread_idx] = new_color;
     }
   }
 
@@ -29,6 +30,7 @@ $(document).ready(function () {
       const weft_block_idx = are_you_editing ? pick_idx : draft.weft_blocks[pick_idx]
       var weft_pattern = $(`#weft-block-${weft_block_idx}`);
       weft_pattern.attr('fill', `url(#color-${new_color})`)
+      draft.draft.weft_colors[pick_idx] = new_color;
     }
   }
 

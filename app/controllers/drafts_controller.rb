@@ -1,5 +1,5 @@
 class DraftsController < ApplicationController
-    before_action :set_draft, only: [:show]
+    before_action :set_draft, only: [:show, :edit]
     authorize_resource
 
     # GET /drafts
@@ -9,6 +9,10 @@ class DraftsController < ApplicationController
 
     def show
       # render @draft
+    end
+
+    def edit
+      # render @draft + editing form
     end
 
     def new

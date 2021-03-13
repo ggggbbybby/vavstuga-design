@@ -28,7 +28,7 @@ class Draft < ApplicationRecord
     ]
   end
 
-  def to_json
+  def to_json(mode: :show)
     {
       name: name,
       slug: slug,
@@ -47,12 +47,16 @@ class Draft < ApplicationRecord
     draft['weft'] || []
   end
 
+  def tieup
+    draft['tieup'] || []
+  end
+
   def shafts
-    [draft['shaft_count'].to_i, threading.max].compact.min
+    draft['shaft_count'].to_i
   end
 
   def treadles
-    [draft['treadle_count'].to_i, treadling.max].compact.min
+    draft['treadle_count'].to_i
   end
 
   def warp_colors
@@ -67,12 +71,12 @@ class Draft < ApplicationRecord
     yarn.colors.map { |c| c['code'] }.sort.uniq
   end
 
-  def warp_pattern
+  def warp_pattern(mode: :show)
     memo = []
     pos_x = warp_pixel_width - PIXEL_SIZE
     threading.each_with_index do |thread, idx|
       thread_color = warp_colors[idx.to_s] || warp_colors['default']
-      if memo.last && memo.last[:color] == thread_color
+      if mode == :show && memo.last && memo.last[:color] == thread_color
         memo.last[:width] += PIXEL_SIZE
         memo.last[:x] -= PIXEL_SIZE
         memo.last[:threads] << idx
@@ -99,13 +103,13 @@ class Draft < ApplicationRecord
     threading.length * PIXEL_SIZE
   end
 
-  def weft_pattern
+  def weft_pattern(mode: :show)
     memo = []
     pos_y = weft_pixel_height - PIXEL_SIZE
 
     treadling.each_with_index do |thread, idx|
       thread_color = weft_colors[idx.to_s] || weft_colors['default']
-      if memo.last && memo.last[:color] == thread_color
+      if mode == :show && memo.last && memo.last[:color] == thread_color
         memo.last[:height] += PIXEL_SIZE
         memo.last[:y] -= PIXEL_SIZE
         memo.last[:threads] << idx
@@ -133,13 +137,15 @@ class Draft < ApplicationRecord
   end
 
   def mask_path
+    # drawing a box on the mask means that the warp will show (shaft is up)
     warp_width = threading.length
     warp_length = treadling.length
 
     path = "M #{warp_width*PIXEL_SIZE},#{warp_length*PIXEL_SIZE}"
-    threading.each do |warp_thread|
-      treadling.each do |treadle|
-        if warp_thread != treadle
+    treadling.each do |treadle|
+      threading.each do |warp_thread|
+        sinking_shafts = tieup[treadle - 1]
+        if !sinking_shafts.include?(warp_thread)
           path << "\nv-#{PIXEL_SIZE},h-#{PIXEL_SIZE},v#{PIXEL_SIZE},h#{PIXEL_SIZE}"
         end
         path << "\nm-#{PIXEL_SIZE},0"
@@ -167,5 +173,15 @@ class Draft < ApplicationRecord
     end.join("\n")
   end
 
-
+  def tieup_path
+    init_move = "M #{warp_pixel_width + PIXEL_SIZE},#{weft_pixel_height + PIXEL_SIZE}"
+    tieup.each_with_object([init_move]) do |shafts, path|
+      shafts.each do |shaft|
+        path << "m 0,#{PIXEL_SIZE*(shaft-1)}"
+        path << "v #{PIXEL_SIZE}, h #{PIXEL_SIZE}, v -#{PIXEL_SIZE}, h -#{PIXEL_SIZE}"
+        path << "m 0,-#{PIXEL_SIZE*(shaft-1)}"
+      end
+      path << "m #{PIXEL_SIZE},0"
+    end.join("\n")
+  end
 end

@@ -1,0 +1,24 @@
+<h2>wario's the weener</h2>
+
+<main>
+  <%= javascript_tag do %>
+    window.draft = <%= @draft.to_json.html_safe %>
+  <% end %>
+
+  <div id="edit-frame">
+    <p>
+      Click on the threading, treadling or tie-up boxes to change the draft. 
+      Click on the color bars to change the default colors. 
+      Any empty thread spaces will not be saved.
+    </p>
+
+    <button id="add-warp-threads">Add Warp Threads (+5)</button>
+    <button id="add-weft-picks">Add Weft Picks (+5)</button>
+    <br/>
+    <%= render 'drawdown', draft: @draft, mode: :edit %>
+  </div>
+
+  <h3>Color Palette</h3>
+  <div id="swatches"></div>
+</main>
+

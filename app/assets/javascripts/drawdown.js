@@ -10,10 +10,12 @@ $(document).ready( function(){
     // which thread did they click on?
     // which block does that thread belong to?
     const new_color = $('#selected-color').val();
+    const are_you_editing = $('#edit-frame').length > 0
     if (new_color) {
       const offset = $(this).offset();
       const thread_idx = warp_width - Math.ceil((e.pageX - offset.left) / PIXEL_SIZE)
-      const warp_block_idx = draft.warp_blocks[thread_idx];
+      console.log("changing thread", thread_idx, "to color", new_color);
+      const warp_block_idx = are_you_editing ? thread_idx : draft.warp_blocks[thread_idx];
       const warp_pattern = $(`#warp-block-${warp_block_idx}`);
       warp_pattern.attr('fill', `url(#color-${new_color})`)
     }
@@ -21,10 +23,11 @@ $(document).ready( function(){
 
   var setWeftColor = function(e) {
     const new_color = $('#selected-color').val();
+    const are_you_editing = $('#edit-frame').length > 0;
     if (new_color) {
       const offset = $(this).offset();
       const pick_idx = weft_height - Math.ceil((e.pageY - offset.top) / PIXEL_SIZE)
-      const weft_block_idx = draft.weft_blocks[pick_idx]
+      const weft_block_idx = are_you_editing ? pick_idx : draft.weft_blocks[pick_idx]
       const weft_pattern = $(`#weft-block-${weft_block_idx}`);
       weft_pattern.attr('fill', `url(#color-${new_color})`)
     }

@@ -4,17 +4,16 @@ $(document).ready( function(){
   const draft = window.draft;
   const warp_width = draft.draft.warp.length;
   const weft_height = draft.draft.weft.length;
+  const are_you_editing = $('#edit-frame').length > 0
 
   var setWarpColor = function(e) {
     // challenge: when a user clicks on threading color box, figure out which warp block they clicked on
     // which thread did they click on?
     // which block does that thread belong to?
     const new_color = $('#selected-color').val();
-    const are_you_editing = $('#edit-frame').length > 0
     if (new_color) {
       const offset = $(this).offset();
       const thread_idx = warp_width - Math.ceil((e.pageX - offset.left) / PIXEL_SIZE)
-      console.log("changing thread", thread_idx, "to color", new_color);
       const warp_block_idx = are_you_editing ? thread_idx : draft.warp_blocks[thread_idx];
       const warp_pattern = $(`#warp-block-${warp_block_idx}`);
       warp_pattern.attr('fill', `url(#color-${new_color})`)
@@ -23,7 +22,6 @@ $(document).ready( function(){
 
   var setWeftColor = function(e) {
     const new_color = $('#selected-color').val();
-    const are_you_editing = $('#edit-frame').length > 0;
     if (new_color) {
       const offset = $(this).offset();
       const pick_idx = weft_height - Math.ceil((e.pageY - offset.top) / PIXEL_SIZE)

@@ -226,6 +226,15 @@ $(document).ready(function () {
     });
   }
 
+  const saveDraft = function() {
+    // fill in our drawdown attributes (extremely cheaply, we'll deserialize them on the server side)
+    const $form = $(this);
+    ['warp', 'warp_colors', 'weft', 'weft_colors', 'tieup'].forEach((field_name) => {
+      $form.find(`#draft_draft_${field_name}`).val(JSON.stringify(window.draft.draft[field_name]));
+    })
+    return true;
+  }
+
   // hook it all up
   $('#threading-colors').click(setWarpColor);
   $('#treadling-colors').click(setWeftColor);
@@ -235,5 +244,6 @@ $(document).ready(function () {
     $('#tieup').click(toggleTieUp);
     $('#add-warp-threads').click(addWarpThreads);
     $('#add-weft-picks').click(addWeftPicks);
+    $('form').submit(saveDraft);
   }
 });

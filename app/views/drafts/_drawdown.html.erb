@@ -33,18 +33,19 @@
 
   <rect id="drawdown-grid" x="0" y="0" width="<%=draft.warp_pixel_width + 1%>" height="<%=draft.weft_pixel_height + 1%>" fill="url(#grid)"/>
 
-  <rect id="threading" x="0" y="<%=draft.weft_pixel_height + Draft::PIXEL_SIZE%>" width="<%=draft.warp_pixel_width + 1%>" height="<%=1 + draft.shafts*Draft::PIXEL_SIZE%>" fill="url(#grid)" />
   <path id="threading-path" d="<%= draft.threading_path %>" fill="black" />
+  <rect id="threading" x="0" y="<%=draft.weft_pixel_height + Draft::PIXEL_SIZE%>" width="<%=draft.warp_pixel_width + 1%>" height="<%=1 + draft.shafts*Draft::PIXEL_SIZE%>" fill="url(#grid)" />
 
   <rect id="threading-colors-grid" x="0" y="<%= draft.weft_pixel_height + ((2 + draft.shafts) * Draft::PIXEL_SIZE)%>" width="<%=draft.warp_pixel_width%>" height="<%= Draft::PIXEL_SIZE + 1%>" fill="url(#grid)"/>
   <rect id="threading-colors" x="0" y="<%= draft.weft_pixel_height + ((2 + draft.shafts) * Draft::PIXEL_SIZE)%>" width="<%=draft.warp_pixel_width%>" height="<%= Draft::PIXEL_SIZE + 1%>" fill="url(#warp)"/>
 
-  <rect id="treadling" x="<%=draft.warp_pixel_width + Draft::PIXEL_SIZE%>" y="0" width="<%=1 + draft.treadles * Draft::PIXEL_SIZE%>" height="<%=1 + draft.weft_pixel_height %>" fill="url(#grid)" />
   <path id="treadling-path" d="<%=draft.treadling_path %>" fill="black" />
+  <rect id="treadling" x="<%=draft.warp_pixel_width + Draft::PIXEL_SIZE%>" y="0" width="<%=1 + draft.treadles * Draft::PIXEL_SIZE%>" height="<%=1 + draft.weft_pixel_height %>" fill="url(#grid)" />
 
   <rect id="treadling-colors-grid" x="<%=draft.warp_pixel_width + ((2 + draft.treadles) * Draft::PIXEL_SIZE)%>" y="0" width="<%=Draft::PIXEL_SIZE + 1%>" height="<%=draft.weft_pixel_height%>" fill="url(#grid)" />
   <rect id="treadling-colors" x="<%=draft.warp_pixel_width + ((2 + draft.treadles) * Draft::PIXEL_SIZE)%>" y="0" width="<%=Draft::PIXEL_SIZE%>" height="<%=draft.weft_pixel_height%>" fill="url(#weft)" />
 
-  <rect id="tieup" x="<%=draft.warp_pixel_width + Draft::PIXEL_SIZE%>" y="<%=draft.weft_pixel_height + Draft::PIXEL_SIZE%>" width="<%= 1 + draft.treadles * Draft::PIXEL_SIZE %>" height="<%= 1 + draft.shafts * Draft::PIXEL_SIZE %>" fill="url(#grid)" />
   <path id="tieup-path" d="<%=draft.tieup_path %>" fill="black" />
+  <rect id="tieup" x="<%=draft.warp_pixel_width + Draft::PIXEL_SIZE%>" y="<%=draft.weft_pixel_height + Draft::PIXEL_SIZE%>" width="<%= 1 + draft.treadles * Draft::PIXEL_SIZE %>" height="<%= 1 + draft.shafts * Draft::PIXEL_SIZE %>" fill="url(#grid)" />
+  
 </svg>

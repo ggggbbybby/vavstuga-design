@@ -12,12 +12,13 @@
 
     <%= draft_f.label :treadle_count %>
     <%= draft_f.number_field :treadle_count, class: "form-control", value: draft.treadles %>
-
-    <%= draft_f.hidden_field :warp %>
-    <%= draft_f.hidden_field :warp_colors %>
-    <%= draft_f.hidden_field :weft %>
-    <%= draft_f.hidden_field :weft_colors %>
-    <%= draft_f.hidden_field :tieup %>
+    <% if @draft.persisted? %>
+      <%= draft_f.hidden_field :warp %>
+      <%= draft_f.hidden_field :warp_colors %>
+      <%= draft_f.hidden_field :weft %>
+      <%= draft_f.hidden_field :weft_colors %>
+      <%= draft_f.hidden_field :tieup %>
+    <% end %>
   <% end %>
 
   <%= form.submit "Save Draft", class: "btn btn-primary" %>

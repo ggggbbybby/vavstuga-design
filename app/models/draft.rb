@@ -3,6 +3,7 @@ class Draft < ApplicationRecord
   belongs_to :yarn
 
   before_save :assign_slug
+  before_create :skeleton_draft
 
   PIXEL_SIZE = 15
 
@@ -28,6 +29,24 @@ class Draft < ApplicationRecord
     ]
   end
 
+  def self.with_defaults
+    new(draft: {
+      'shaft_count' => 4,
+      'treadle_count' => 4,
+      'warp' => [],
+      'weft' => [],
+      'tieup' => [],
+      'warp_colors' => {'default' => '2000'},
+      'weft_colors' => {'default' => '2020'},
+    })
+  end
+
+  def skeleton_draft
+    draft['warp'] = (1..shafts).to_a
+    draft['weft'] = (1..treadles).to_a
+    draft['tieup'] = (1..treadles).map { |t| t <= shafts ? [t] : [] }
+  end
+
   def to_json(mode: :show)
     {
       name: name,
@@ -37,6 +56,16 @@ class Draft < ApplicationRecord
       warp_blocks: warp_blocks,
       weft_blocks: weft_blocks,
     }.to_json.html_safe
+  end
+
+  def has_breadcrumbs?
+    false
+  end
+
+  def category
+  end
+
+  def product_name
   end
 
   def threading

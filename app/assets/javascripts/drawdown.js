@@ -4,7 +4,7 @@ $(document).ready(function () {
   const draft = window.draft;
   var warp_width = draft.draft.warp.length;
   var weft_height = draft.draft.weft.length;
-  // editing mode lets you change individual thread colors
+  // editing mode lets you change individual thread colors & modify the in-memory draft
   const are_you_editing = $('#edit-frame').length > 0
 
   const setWarpColor = function (e) {
@@ -18,7 +18,7 @@ $(document).ready(function () {
       const warp_block_idx = are_you_editing ? thread_idx : draft.warp_blocks[thread_idx];
       const warp_pattern = $(`#warp-block-${warp_block_idx}`);
       warp_pattern.attr('fill', `url(#color-${new_color})`)
-      draft.draft.warp_colors[thread_idx] = new_color;
+      if (are_you_editing) draft.draft.warp_colors[thread_idx] = new_color;
     }
   }
 
@@ -30,8 +30,17 @@ $(document).ready(function () {
       const weft_block_idx = are_you_editing ? pick_idx : draft.weft_blocks[pick_idx]
       var weft_pattern = $(`#weft-block-${weft_block_idx}`);
       weft_pattern.attr('fill', `url(#color-${new_color})`)
-      draft.draft.weft_colors[pick_idx] = new_color;
+      if (are_you_editing) draft.draft.weft_colors[pick_idx] = new_color;
     }
+  }
+
+  const resetColor = function() {
+    $(this).attr('fill', `url(#color-${this.dataset.color})`)
+  }
+  const resetDefaultColors = function (e) {
+    e.preventDefault();
+    $('.weft-block').each(resetColor)
+    $('.warp-block').each(resetColor)
   }
 
   const generateThreadingPath = function({warp}) {
@@ -107,7 +116,7 @@ $(document).ready(function () {
     const treadle = Math.ceil((e.pageX - offset.left) / PIXEL_SIZE)
     const treadle_idx = treadle - 1
     const shaft = Math.ceil((e.pageY - offset.top) / PIXEL_SIZE)
-    const sinking_shafts = draft.draft.tieup[treadle_idx]
+    const sinking_shafts = draft.draft.tieup[treadle_idx] || []
     if (sinking_shafts.includes(shaft)) {
       draft.draft.tieup[treadle_idx] = sinking_shafts.filter(s => s !== shaft)
     } else {
@@ -238,6 +247,7 @@ $(document).ready(function () {
   // hook it all up
   $('#threading-colors').click(setWarpColor);
   $('#treadling-colors').click(setWeftColor);
+  $('#reset-default-colors').click(resetDefaultColors);
   if (are_you_editing) {
     $('#threading').click(setWarpThread);
     $('#treadling').click(setWeftPick);

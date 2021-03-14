@@ -12,13 +12,13 @@
 
     <pattern id="warp" width="<%=draft.warp_pixel_width%>" height="50" patternUnits="userSpaceOnUse">
       <% draft.warp_pattern(mode: mode).each_with_index do |warp_block, block_id| %>
-        <rect id="warp-block-<%=block_id%>" x="<%=warp_block[:x]%>" y="0" width="<%=warp_block[:width]%>" height="50" fill="url(#color-<%=warp_block[:color]%>)" />
+        <rect id="warp-block-<%=block_id%>" class='warp-block' x="<%=warp_block[:x]%>" y="0" width="<%=warp_block[:width]%>" height="50" fill="url(#color-<%=warp_block[:color]%>)" data-color="<%=warp_block[:color]%>" />
       <% end %>
     </pattern>
 
     <pattern id="weft" width="50" height="<%=draft.weft_pixel_height%>" patternUnits="userSpaceOnUse">
       <% draft.weft_pattern(mode: mode).each_with_index do |weft_block, block_id| %>
-        <rect id="weft-block-<%=block_id%>" x="0" y="<%=weft_block[:y]%>" width="50" height="<%=weft_block[:height]%>" fill="url(#color-<%=weft_block[:color]%>)" />
+        <rect id="weft-block-<%=block_id%>" class='weft-block' x="0" y="<%=weft_block[:y]%>" width="50" height="<%=weft_block[:height]%>" fill="url(#color-<%=weft_block[:color]%>)" data-color="<%=weft_block[:color]%>" />
       <% end %>
     </pattern>
   </defs>

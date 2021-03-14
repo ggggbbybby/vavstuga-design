@@ -1,5 +1,5 @@
 class DraftsController < ApplicationController
-    before_action :set_draft, only: [:show, :edit, :update]
+    before_action :set_draft, only: [:show, :edit, :update, :destroy]
     authorize_resource
 
     # GET /drafts
@@ -16,15 +16,18 @@ class DraftsController < ApplicationController
     end
 
     def new
-      @draft = Draft.new
+      @draft = Draft.with_defaults
     end
 
     def create
-      @draft = Draft.new(draft_params)
+      @draft = Draft.with_defaults
       @draft.user = current_user || User.first
+      params = draft_params
 
-      if @draft.save
-        redirect_to draft_path(@draft.id), notice: 'Draft was successfully created.'
+      # don't overwrite default draft values, we need those
+      @draft.draft.each { |k, v| params[:draft][k] ||= v }
+      if @draft.update(params)
+        redirect_to edit_draft_path(@draft.id), notice: 'Draft was successfully created.'
       else
         render :new
       end
@@ -42,6 +45,11 @@ class DraftsController < ApplicationController
       else
         render :edit, notice: 'Draft could not be updated'
       end
+    end
+
+    def destroy
+      @draft.destroy
+      redirect_to drafts_path, notice: 'Draft was successfully destroyed'
     end
 
     private

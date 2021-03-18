@@ -1,24 +1,36 @@
-<svg id="drawdown" width="<%=draft.warp_pixel_width + ((3 + draft.treadles) * Draft::PIXEL_SIZE) + 1 %>" height="<%=draft.weft_pixel_height + ((3 + draft.shafts) * Draft::PIXEL_SIZE) + 1%>" xmlns="http://www.w3.org/2000/svg">
+<svg id="drawdown" width="<%=drawdown_svg_width(draft)%>" height="<%=drawdown_svg_height(draft)%>" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <pattern id="grid" width="<%=Draft::PIXEL_SIZE%>" height="<%=Draft::PIXEL_SIZE%>" patternUnits="userSpaceOnUse">
       <path d="M <%=Draft::PIXEL_SIZE%> 0 L 0 0 0 <%=Draft::PIXEL_SIZE%>" fill="none" stroke="gray" stroke-width="0.5"/>
     </pattern>
 
     <% draft.color_palette.each do |colorcode| %>
-      <pattern id="color-<%=colorcode%>" width="70" height="70" patternUnits="userSpaceOnUse">
+      <pattern id="color-<%=colorcode%>" width="<%= Draft::SWATCH_SIZE %>" height="<%= Draft::SWATCH_SIZE %>" patternUnits="userSpaceOnUse">
         <image xlink:href="<%=draft.yarn.url%>-<%=colorcode%>.jpg"></image>
       </pattern>
     <% end %>
 
-    <pattern id="warp" width="<%=draft.warp_pixel_width%>" height="50" patternUnits="userSpaceOnUse">
+    <% warp_swatches(draft).each do |swatch| %>
+      <pattern id="color-swatch-<%= swatch[:color] %>" width="<%= Draft::SWATCH_SIZE %>" height="<%= Draft::SWATCH_SIZE %>" x="<%=swatch[:x]%>"  y="<%=swatches_y(draft)%>" patternUnits="userSpaceOnUse">
+        <rect height="<%= Draft::SWATCH_SIZE %>" width="<%= Draft::SWATCH_SIZE %>" fill="url(#color-<%=swatch[:color]%>)" />
+      </pattern>
+    <% end %>
+
+    <% weft_swatches(draft).each do |swatch| %>
+      <pattern id="color-swatch-<%= swatch[:color] %>" width="<%= Draft::SWATCH_SIZE %>" height="<%= Draft::SWATCH_SIZE %>" x="<%=swatch[:x]%>"  y="<%=swatches_y(draft)%>" patternUnits="userSpaceOnUse">
+        <rect height="<%= Draft::SWATCH_SIZE %>" width="<%= Draft::SWATCH_SIZE %>" fill="url(#color-<%=swatch[:color]%>)" />
+      </pattern>
+    <% end %>
+
+    <pattern id="warp" width="<%=draft.warp_pixel_width%>" height="<%= Draft::SWATCH_SIZE %>" patternUnits="userSpaceOnUse">
       <% draft.warp_pattern(mode: mode).each_with_index do |warp_block, block_id| %>
-        <rect id="warp-block-<%=block_id%>" class='warp-block' x="<%=warp_block[:x]%>" y="0" width="<%=warp_block[:width]%>" height="50" fill="url(#color-<%=warp_block[:color]%>)" data-color="<%=warp_block[:color]%>" />
+        <rect id="warp-block-<%=block_id%>" class='warp-block' x="<%=warp_block[:x]%>" y="0" width="<%=warp_block[:width]%>" height="<%= Draft::SWATCH_SIZE %>" fill="url(#color-<%=warp_block[:color]%>)" data-color="<%=warp_block[:color]%>" />
       <% end %>
     </pattern>
 
-    <pattern id="weft" width="50" height="<%=draft.weft_pixel_height%>" patternUnits="userSpaceOnUse">
+    <pattern id="weft" width="<%= Draft::SWATCH_SIZE %>" height="<%=draft.weft_pixel_height%>" patternUnits="userSpaceOnUse">
       <% draft.weft_pattern(mode: mode).each_with_index do |weft_block, block_id| %>
-        <rect id="weft-block-<%=block_id%>" class='weft-block' x="0" y="<%=weft_block[:y]%>" width="50" height="<%=weft_block[:height]%>" fill="url(#color-<%=weft_block[:color]%>)" data-color="<%=weft_block[:color]%>" />
+        <rect id="weft-block-<%=block_id%>" class='weft-block' x="0" y="<%=weft_block[:y]%>" width="<%= Draft::SWATCH_SIZE %>" height="<%=weft_block[:height]%>" fill="url(#color-<%=weft_block[:color]%>)" data-color="<%=weft_block[:color]%>" />
       <% end %>
     </pattern>
   </defs>
@@ -34,18 +46,29 @@
   <rect id="drawdown-grid" x="0" y="0" width="<%=draft.warp_pixel_width + 1%>" height="<%=draft.weft_pixel_height + 1%>" fill="url(#grid)"/>
 
   <path id="threading-path" d="<%= draft.threading_path %>" fill="black" />
-  <rect id="threading" x="0" y="<%=draft.weft_pixel_height + Draft::PIXEL_SIZE%>" width="<%=draft.warp_pixel_width + 1%>" height="<%=1 + draft.shafts*Draft::PIXEL_SIZE%>" fill="url(#grid)" />
+  <rect id="threading" x="0" y="<%=threading_y(draft)%>" width="<%=draft.warp_pixel_width + 1%>" height="<%=1 + draft.shafts*Draft::PIXEL_SIZE%>" fill="url(#grid)" />
 
-  <rect id="threading-colors-grid" x="0" y="<%= draft.weft_pixel_height + ((2 + draft.shafts) * Draft::PIXEL_SIZE)%>" width="<%=draft.warp_pixel_width%>" height="<%= Draft::PIXEL_SIZE + 1%>" fill="url(#grid)"/>
-  <rect id="threading-colors" x="0" y="<%= draft.weft_pixel_height + ((2 + draft.shafts) * Draft::PIXEL_SIZE)%>" width="<%=draft.warp_pixel_width%>" height="<%= Draft::PIXEL_SIZE + 1%>" fill="url(#warp)"/>
+  <rect id="threading-colors-grid" x="0" y="<%=threading_colors_y(draft)%>" width="<%=draft.warp_pixel_width%>" height="<%= Draft::PIXEL_SIZE + 1%>" fill="url(#grid)"/>
+  <rect id="threading-colors" x="0" y="<%=threading_colors_y(draft)%>" width="<%=draft.warp_pixel_width%>" height="<%= Draft::PIXEL_SIZE + 1%>" fill="url(#warp)"/>
 
   <path id="treadling-path" d="<%=draft.treadling_path %>" fill="black" />
-  <rect id="treadling" x="<%=draft.warp_pixel_width + Draft::PIXEL_SIZE%>" y="0" width="<%=1 + draft.treadles * Draft::PIXEL_SIZE%>" height="<%=1 + draft.weft_pixel_height %>" fill="url(#grid)" />
+  <rect id="treadling" x="<%=treadling_x(draft)%>" y="0" width="<%=1 + draft.treadles * Draft::PIXEL_SIZE%>" height="<%=1 + draft.weft_pixel_height %>" fill="url(#grid)" />
 
-  <rect id="treadling-colors-grid" x="<%=draft.warp_pixel_width + ((2 + draft.treadles) * Draft::PIXEL_SIZE)%>" y="0" width="<%=Draft::PIXEL_SIZE + 1%>" height="<%=draft.weft_pixel_height%>" fill="url(#grid)" />
-  <rect id="treadling-colors" x="<%=draft.warp_pixel_width + ((2 + draft.treadles) * Draft::PIXEL_SIZE)%>" y="0" width="<%=Draft::PIXEL_SIZE%>" height="<%=draft.weft_pixel_height%>" fill="url(#weft)" />
+  <rect id="treadling-colors-grid" x="<%=treadling_colors_x(draft)%>" y="0" width="<%=Draft::PIXEL_SIZE + 1%>" height="<%=draft.weft_pixel_height%>" fill="url(#grid)" />
+  <rect id="treadling-colors" x="<%=treadling_colors_x(draft)%>" y="0" width="<%=Draft::PIXEL_SIZE%>" height="<%=draft.weft_pixel_height%>" fill="url(#weft)" />
 
   <path id="tieup-path" d="<%=draft.tieup_path %>" fill="black" />
-  <rect id="tieup" x="<%=draft.warp_pixel_width + Draft::PIXEL_SIZE%>" y="<%=draft.weft_pixel_height + Draft::PIXEL_SIZE%>" width="<%= 1 + draft.treadles * Draft::PIXEL_SIZE %>" height="<%= 1 + draft.shafts * Draft::PIXEL_SIZE %>" fill="url(#grid)" />
-  
+  <rect id="tieup" x="<%=treadling_x(draft)%>" y="<%=threading_y(draft)%>" width="<%= 1 + draft.treadles * Draft::PIXEL_SIZE %>" height="<%= 1 + draft.shafts * Draft::PIXEL_SIZE %>" fill="url(#grid)" />
+
+  <text x="0" y="<%= swatches_label_baseline_y(draft) %>">Warp Colors</text>
+  <% warp_swatches(draft).each do |swatch| %>
+    <rect x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" />
+    <text x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:color]%> </text>
+  <% end %>
+
+  <text x="<%= weft_swatches_offset(draft) %>" y="<%= swatches_label_baseline_y(draft) %>">Weft Colors</text>
+  <% weft_swatches(draft).each do |swatch| %>
+    <rect x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" />
+    <text x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:color]%> </text>
+  <% end %>
 </svg>

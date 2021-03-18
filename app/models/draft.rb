@@ -6,6 +6,7 @@ class Draft < ApplicationRecord
   before_create :skeleton_draft
 
   PIXEL_SIZE = 15
+  SWATCH_SIZE = 70
 
   def assign_slug
     self.slug ||= SecureRandom.hex(12)
@@ -98,6 +99,13 @@ class Draft < ApplicationRecord
 
   def color_palette
     yarn.colors.map { |c| c['code'] }.sort.uniq
+  end
+
+  def default_colors
+    {
+      warp_colors: [warp_colors['default'], *warp_colors.values].uniq,
+      weft_colors: [weft_colors['default'], *weft_colors.values].uniq
+    }
   end
 
   def warp_pattern(mode: :show)

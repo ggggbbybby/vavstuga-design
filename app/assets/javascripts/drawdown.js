@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  if (!window.draft) return; // we're not on a page with a draft
 
   const PIXEL_SIZE = window.draft.pixel_size;
   const draft = window.draft;

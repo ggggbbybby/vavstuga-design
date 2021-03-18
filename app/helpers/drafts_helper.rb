@@ -47,7 +47,11 @@ module DraftsHelper
 
   def warp_swatches(draft)
     draft.default_colors[:warp_colors].each_with_index.map do |color, idx| 
-      {x: idx * (Draft::SWATCH_SIZE + gutter), color: color}
+      {
+        x: idx * (Draft::SWATCH_SIZE + gutter), 
+        color: color,
+        label: "##{color}" 
+      }
     end
   end
 
@@ -58,7 +62,11 @@ module DraftsHelper
   def weft_swatches(draft)
     offset = weft_swatches_offset(draft)
     draft.default_colors[:weft_colors].each_with_index.map do |color, idx|
-      { x: (idx * (Draft::SWATCH_SIZE + gutter)) + offset, color: color }
+      { 
+        x: (idx * (Draft::SWATCH_SIZE + gutter)) + offset, 
+        color: color, 
+        label: "##{color}" 
+      }
     end
   end
 end

@@ -216,7 +216,7 @@ $(document).ready(function () {
     weft_height += 5
     const amount_to_move = 5 * PIXEL_SIZE;
     [...boxes_to_stretch, '#treadling', '#treadling-colors', '#treadling-colors-grid', 'pattern#weft'].forEach(stretchBox(0, amount_to_move));
-    [...boxes_to_move, '#threading', '#threading-colors', '#threading-colors-grid'].forEach(moveBox(0, amount_to_move));
+    [...boxes_to_move, '#threading', '#threading-colors', '#threading-colors-grid', '#warp-swatches-label', '#weft-swatches-label', '.warp-swatch', '.warp-swatch-caption', '.weft-swatch', '.weft-swatch-caption'].forEach(moveBox(0, amount_to_move));
     paths_to_move.forEach(movePath(0, amount_to_move));
     // add new weft-blocks for color, shift the old ones down
     const weft_block_idxs = [...Array(weft_height).keys()];

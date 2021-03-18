@@ -60,15 +60,15 @@
   <path id="tieup-path" d="<%=draft.tieup_path %>" fill="black" />
   <rect id="tieup" x="<%=treadling_x(draft)%>" y="<%=threading_y(draft)%>" width="<%= 1 + draft.treadles * Draft::PIXEL_SIZE %>" height="<%= 1 + draft.shafts * Draft::PIXEL_SIZE %>" fill="url(#grid)" />
 
-  <text x="0" y="<%= swatches_label_baseline_y(draft) %>">Warp Colors</text>
+  <text id="warp-swatches-label" x="0" y="<%= swatches_label_baseline_y(draft) %>">Warp Colors</text>
   <% warp_swatches(draft).each do |swatch| %>
-    <rect x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" />
-    <text x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
+    <rect class="warp-swatch" x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" />
+    <text class='weft-swatch-caption' x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
   <% end %>
 
-  <text x="<%= weft_swatches_offset(draft) %>" y="<%= swatches_label_baseline_y(draft) %>">Weft Colors</text>
+  <text id="weft-swatches-label" x="<%= weft_swatches_offset(draft) %>" y="<%= swatches_label_baseline_y(draft) %>">Weft Colors</text>
   <% weft_swatches(draft).each do |swatch| %>
-    <rect x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" />
-    <text x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
+    <rect class="weft-swatch" x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" />
+    <text class='weft-swatch-caption' x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
   <% end %>
 </svg>

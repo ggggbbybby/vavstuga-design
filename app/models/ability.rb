@@ -34,6 +34,7 @@ class Ability
       can :manage, :all if user.admin?
     end
     can :read, Pattern, public: true
+    can :read, Draft, public: true
     can :read, Yarn
   end
 end

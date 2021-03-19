@@ -233,10 +233,9 @@ $(document).ready(function () {
   }
 
   const addWarpThreads = function (e) {
-    // shift everything 5 boxes horizontally
-    // fixme: warp colors are anchored on the left, need to be anchored on the right
-    warp_width += 5
-    const amount_to_move = 5 * PIXEL_SIZE;
+    // shift everything 4 boxes horizontally
+    warp_width += 4
+    const amount_to_move = 4 * PIXEL_SIZE;
     [...boxes_to_stretch, '#threading', '#threading-colors', '#threading-colors-grid', 'pattern#warp'].forEach(stretchBox(amount_to_move, 0));
     [...boxes_to_move, '#treadling', '#treadling-colors', '#treadling-colors-grid'].forEach(moveBox(amount_to_move, 0));
     paths_to_move.forEach(movePath(amount_to_move, 0));
@@ -259,8 +258,8 @@ $(document).ready(function () {
   }
 
   const addWeftPicks = function (e) {
-    weft_height += 5
-    const amount_to_move = 5 * PIXEL_SIZE;
+    weft_height += 4
+    const amount_to_move = 4 * PIXEL_SIZE;
     [...boxes_to_stretch, '#treadling', '#treadling-colors', '#treadling-colors-grid', 'pattern#weft'].forEach(stretchBox(0, amount_to_move));
     [...boxes_to_move, '#threading', '#threading-colors', '#threading-colors-grid', '#warp-swatches-label', '#weft-swatches-label', '.warp-swatch', '.warp-swatch-caption', '.weft-swatch', '.weft-swatch-caption'].forEach(moveBox(0, amount_to_move));
     paths_to_move.forEach(movePath(0, amount_to_move));

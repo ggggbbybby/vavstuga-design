@@ -18,6 +18,10 @@ class Draft < ApplicationRecord
       :slug,
       :public,
       :yarn_id,
+      :vavstuga_category_name,
+      :vavstuga_category_url,
+      :vavstuga_product_name,
+      :vavstuga_product_url,
       draft: [
         :shaft_count,
         :treadle_count,
@@ -60,13 +64,7 @@ class Draft < ApplicationRecord
   end
 
   def has_breadcrumbs?
-    false
-  end
-
-  def category
-  end
-
-  def product_name
+    vavstuga_product_url.present? && vavstuga_product_name.present? && vavstuga_category_url.present? && vavstuga_category_name.present?
   end
 
   def threading

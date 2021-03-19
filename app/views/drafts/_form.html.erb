@@ -1,17 +1,40 @@
 <%= form_with(model: draft, data: {type: 'json'}) do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name, class: "form-control" %>
-  <%= form.label :slug %>
-  <%= form.text_field :slug, class: "form-control" %>
-  
-  <%= form.label :yarn %>
-  <%= form.select :yarn_id, Yarn.to_options, {}, {id: :draft_yarn_id, class: "form-control" } %>
-  <%= form.fields_for :draft do |draft_f| %>
-    <%= draft_f.label :shaft_count %>
-    <%= draft_f.number_field :shaft_count, class: "form-control", value: draft.shafts %>
+  <div class="form-group">
+    <%= form.label :public do %>
+      Public?
+      <%= form.check_box :public %>
+    <% end %>
+  </div>
 
-    <%= draft_f.label :treadle_count %>
-    <%= draft_f.number_field :treadle_count, class: "form-control", value: draft.treadles %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label for="draft[slug]">Custom URL</label>
+    <div class="input-group form-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text">vavstuga.design/drafts/</div>
+      </div>
+      <%= form.text_field :slug, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= form.label :yarn %>
+    <%= form.select :yarn_id, Yarn.to_options, {}, {id: :draft_yarn_id, class: "form-control" } %>
+  </div>
+
+  <%= form.fields_for :draft do |draft_f| %>
+    <div class="form-group">
+      <%= draft_f.label :shaft_count %>
+      <%= draft_f.number_field :shaft_count, class: "form-control", value: draft.shafts %>
+    </div>
+
+    <div class="form-group">
+      <%= draft_f.label :treadle_count %>
+      <%= draft_f.number_field :treadle_count, class: "form-control", value: draft.treadles %>
+    </div>
     <% if @draft.persisted? %>
       <%= draft_f.hidden_field :warp %>
       <%= draft_f.hidden_field :warp_colors %>
@@ -21,5 +44,19 @@
     <% end %>
   <% end %>
 
+  <div>
+    <b> Breadcrumbs </b>
+    <div class="form-group">
+      <label for="draft[vavstuga_category_name]">Store Category Name</label>
+      <%= form.text_field :vavstuga_category_name, class: "form-control" %>
+      <label for="draft[vavstuga_category_url]">Store Category Page</label>
+      <%= form.text_field :vavstuga_category_url, class: "form-control" %>
+
+      <label for="draft[vavstuga_product_name]">Store Product Name</label>
+      <%= form.text_field :vavstuga_product_name, class: "form-control" %>        
+      <label for="draft[vavstuga_product_url]">Store Product Page</label>
+      <%= form.text_field :vavstuga_product_url, class: "form-control" %>
+    </div>
+  </div>
   <%= form.submit "Save Draft", class: "btn btn-primary" %>
 <% end %>

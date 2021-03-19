@@ -1,14 +1,14 @@
-<div class="breadcrumbs">
-  <% if @draft.has_breadcrumbs? %>
+<% if @draft.has_breadcrumbs? %>
+  <div class="breadcrumbs">
     <%= link_to "Vävstuga Store", "https://store.vavstuga.com/" %>
     »
     <%= link_to "Warps to Go", "https://store.vavstuga.com/category/togo.html" %>
     »
-    <%= link_to "#{@draft.category}", @pattern.vavstuga_category_url %>
+    <%= link_to "#{@draft.vavstuga_category_name}", @draft.vavstuga_category_url %>
     »
-    <%= link_to "#{@draft.product_name}", @pattern.vavstuga_product_url %>
-  <% end %>
-</div>
+    <%= link_to "#{@draft.vavstuga_product_name}", @draft.vavstuga_product_url %>
+  </div>
+<% end %>
 
 <main>
   <%= javascript_tag do %>

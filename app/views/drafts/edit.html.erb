@@ -1,6 +1,6 @@
-<h2>Edit Profile Draft</h2>
-
 <main>
+  <h3>Edit Profile Draft</h3>
+  <%= link_to 'Back (Discard Changes)', draft_path(@draft.id) %>
   <%= javascript_tag do %>
     window.draft = <%= @draft.to_json.html_safe %>
   <% end %>
@@ -12,8 +12,8 @@
       <p>
         Click on a color swatch below to select a color, then click on one of the swatches above to replace all threads in that color with your selected color. Or, click on the color bars on the draft to color a single thread. (Please note that new colors won't appear in the palette above but they will be saved.)
       </p>
-      <button id="add-warp-threads">Add Warp Threads (+5)</button>
-      <button id="add-weft-picks">Add Weft Picks (+5)</button>
+      <button id="add-warp-threads">Add Warp Threads (+4)</button>
+      <button id="add-weft-picks">Add Weft Picks (+4)</button>
     </div>
     <div id="swatches"></div>
     

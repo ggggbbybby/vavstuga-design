@@ -12,7 +12,9 @@ module DraftsHelper
   end
 
   def drawdown_svg_width(draft)
-    (draft.threading.length * Draft::PIXEL_SIZE) + gutter + (draft.treadles * Draft::PIXEL_SIZE) + gutter + Draft::PIXEL_SIZE
+    drawdown_width = (draft.threading.length * Draft::PIXEL_SIZE) + gutter + (draft.treadles * Draft::PIXEL_SIZE) + gutter + Draft::PIXEL_SIZE
+    palette_width = (Draft::SWATCH_SIZE + gutter) * (draft.default_colors[:warp_colors].length + draft.default_colors[:weft_colors].length)
+    [drawdown_width, palette_width].max
   end
 
   # shorthand coordinates for sections of the draft

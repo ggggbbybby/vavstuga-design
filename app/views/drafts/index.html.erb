@@ -1,0 +1,18 @@
+<h2>Profile Drafts</h2>
+
+<h3> [ADMIN] All Drafts </h3>
+<table class="table">
+    <tbody>
+        <% @drafts.each do |draft| %>
+            <tr>
+                <td><%= link_to (draft.name || "Draft ##{draft.id}"), draft_path(draft.id) %></td>
+                <td><%= link_to 'Edit', edit_draft_path(draft.id) %></td>
+                <td><%= link_to 'Destroy', draft_path(draft.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
+    
+<% if can?(:create, Draft) %>
+  <%= link_to 'New Draft', new_draft_path %>
+<% end %>

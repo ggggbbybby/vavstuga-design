@@ -15,6 +15,19 @@ ActiveRecord::Schema.define(version: 20210304031509) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "drafts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "yarn_id"
+    t.string "name"
+    t.string "slug"
+    t.json "draft"
+    t.boolean "public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_drafts_on_user_id"
+    t.index ["yarn_id"], name: "index_drafts_on_yarn_id"
+  end
+
   create_table "patterns", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "yarn_id"
@@ -31,6 +44,18 @@ ActiveRecord::Schema.define(version: 20210304031509) do
     t.string "vavstuga_product_name"
     t.index ["user_id"], name: "index_patterns_on_user_id"
     t.index ["yarn_id"], name: "index_patterns_on_yarn_id"
+  end
+
+  create_table "profile_drafts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "yarn_id"
+    t.string "name"
+    t.json "draft"
+    t.boolean "public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profile_drafts_on_user_id"
+    t.index ["yarn_id"], name: "index_profile_drafts_on_yarn_id"
   end
 
   create_table "users", force: :cascade do |t|

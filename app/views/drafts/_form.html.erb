@@ -1,0 +1,25 @@
+<%= form_with(model: draft, data: {type: 'json'}) do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name, class: "form-control" %>
+  <%= form.label :slug %>
+  <%= form.text_field :slug, class: "form-control" %>
+  
+  <%= form.label :yarn %>
+  <%= form.select :yarn_id, Yarn.to_options, {}, {id: :draft_yarn_id, class: "form-control" } %>
+  <%= form.fields_for :draft do |draft_f| %>
+    <%= draft_f.label :shaft_count %>
+    <%= draft_f.number_field :shaft_count, class: "form-control", value: draft.shafts %>
+
+    <%= draft_f.label :treadle_count %>
+    <%= draft_f.number_field :treadle_count, class: "form-control", value: draft.treadles %>
+    <% if @draft.persisted? %>
+      <%= draft_f.hidden_field :warp %>
+      <%= draft_f.hidden_field :warp_colors %>
+      <%= draft_f.hidden_field :weft %>
+      <%= draft_f.hidden_field :weft_colors %>
+      <%= draft_f.hidden_field :tieup %>
+    <% end %>
+  <% end %>
+
+  <%= form.submit "Save Draft", class: "btn btn-primary" %>
+<% end %>

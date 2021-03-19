@@ -1,0 +1,5 @@
+<h2> New Draft Setup </h2>
+<%= javascript_tag do %>
+  window.draft = <%= @draft.to_json.html_safe %>
+<% end %>
+<%= render 'form', draft: @draft %>

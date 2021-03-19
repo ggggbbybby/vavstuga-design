@@ -1,0 +1,39 @@
+<div class="breadcrumbs">
+  <% if @draft.has_breadcrumbs? %>
+    <%= link_to "Vävstuga Store", "https://store.vavstuga.com/" %>
+    »
+    <%= link_to "Warps to Go", "https://store.vavstuga.com/category/togo.html" %>
+    »
+    <%= link_to "#{@draft.category}", @pattern.vavstuga_category_url %>
+    »
+    <%= link_to "#{@draft.product_name}", @pattern.vavstuga_product_url %>
+  <% end %>
+</div>
+
+<main>
+  <%= javascript_tag do %>
+    window.draft = <%= @draft.to_json.html_safe %>
+  <% end %>
+
+  <h3><%= @draft.name %></h3>
+  <% if can?(:edit, @draft) %>
+    <div>
+      <%= link_to 'Edit', edit_draft_path(@draft.id) if can?(:edit, @draft) %>
+    </div>
+  <% end %>
+
+  <%= render 'drawdown', draft: @draft, mode: :show %>
+  <br/>
+  <p>
+    <button id="reset-default-colors">
+      Reset Default Colors
+    </button>
+  </p>
+
+  <p>
+    Click on one of the color swatches below to select a color, then click on a swatch above to replace the color with your selected color.
+  </p>
+  <div id="swatches">
+  </div>
+</main>
+

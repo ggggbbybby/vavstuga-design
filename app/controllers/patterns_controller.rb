@@ -31,7 +31,6 @@ class PatternsController < ApplicationController
   def create
     @pattern = Pattern.new(pattern_params)
     @pattern.user = current_user || User.first
-    # set empty defaults (why is this necessary now?)
     @pattern.stripes ||= []
     @pattern.default_colors = {}
 

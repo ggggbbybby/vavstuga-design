@@ -24,13 +24,13 @@
 
     <pattern id="warp" width="<%=draft.warp_pixel_width%>" height="<%= Draft::SWATCH_SIZE %>" patternUnits="userSpaceOnUse">
       <% draft.warp_pattern(mode: mode).each_with_index do |warp_block, block_id| %>
-        <rect id="warp-block-<%=block_id%>" class='warp-block' x="<%=warp_block[:x]%>" y="0" width="<%=warp_block[:width]%>" height="<%= Draft::SWATCH_SIZE %>" fill="url(#color-<%=warp_block[:color]%>)" data-color="<%=warp_block[:color]%>" />
+        <rect id="warp-block-<%=block_id%>" class='warp-block warp-thread-<%=warp_block[:color]%>' x="<%=warp_block[:x]%>" y="0" width="<%=warp_block[:width]%>" height="<%= Draft::SWATCH_SIZE %>" fill="url(#color-<%=warp_block[:color]%>)" data-color="<%=warp_block[:color]%>" />
       <% end %>
     </pattern>
 
     <pattern id="weft" width="<%= Draft::SWATCH_SIZE %>" height="<%=draft.weft_pixel_height%>" patternUnits="userSpaceOnUse">
       <% draft.weft_pattern(mode: mode).each_with_index do |weft_block, block_id| %>
-        <rect id="weft-block-<%=block_id%>" class='weft-block' x="0" y="<%=weft_block[:y]%>" width="<%= Draft::SWATCH_SIZE %>" height="<%=weft_block[:height]%>" fill="url(#color-<%=weft_block[:color]%>)" data-color="<%=weft_block[:color]%>" />
+        <rect id="weft-block-<%=block_id%>" class='weft-block weft-pick-<%=weft_block[:color]%>' x="0" y="<%=weft_block[:y]%>" width="<%= Draft::SWATCH_SIZE %>" height="<%=weft_block[:height]%>" fill="url(#color-<%=weft_block[:color]%>)" data-color="<%=weft_block[:color]%>" />
       <% end %>
     </pattern>
   </defs>
@@ -62,13 +62,13 @@
 
   <text id="warp-swatches-label" x="0" y="<%= swatches_label_baseline_y(draft) %>">Warp Colors</text>
   <% warp_swatches(draft).each do |swatch| %>
-    <rect class="warp-swatch" x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" />
-    <text class='weft-swatch-caption' x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
+    <rect class="warp-swatch" x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" data-color="<%=swatch[:color]%>"/>
+    <text class='warp-swatch-caption' x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
   <% end %>
 
   <text id="weft-swatches-label" x="<%= weft_swatches_offset(draft) %>" y="<%= swatches_label_baseline_y(draft) %>">Weft Colors</text>
   <% weft_swatches(draft).each do |swatch| %>
-    <rect class="weft-swatch" x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" />
+    <rect class="weft-swatch" x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" data-color="<%=swatch[:color]%>"/>
     <text class='weft-swatch-caption' x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
   <% end %>
 </svg>

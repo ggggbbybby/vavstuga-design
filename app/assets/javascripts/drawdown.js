@@ -19,7 +19,29 @@ $(document).ready(function () {
       const warp_block_idx = are_you_editing ? thread_idx : draft.warp_blocks[thread_idx];
       const warp_pattern = $(`#warp-block-${warp_block_idx}`);
       warp_pattern.attr('fill', `url(#color-${new_color})`)
-      if (are_you_editing) draft.draft.warp_colors[thread_idx] = new_color;
+      // update warp-thread class (used for mass updates)
+      warp_pattern.removeClass((i, c) => c.match(/warp-thread-\d+/));
+      warp_pattern.addClass(`warp-thread-${new_color}`)
+      draft.draft.warp_colors[thread_idx] = new_color;
+    }
+  }
+
+  const replaceWarpColor = function(e) {
+    const new_color = $('#selected-color').val();
+    const fill = `url(#color-${new_color})`
+    if (new_color) {
+      const swatch = $(e.target);
+      const old_color = swatch.data('color');
+      swatch.attr('fill', fill)
+      swatch.next('text').html(`#${new_color}`);
+      
+      // find & replace every warp thread in this color
+      $(`.warp-thread-${old_color}`).attr('fill', fill);
+      if (are_you_editing) {
+        Object.entries(draft.draft.warp_colors).forEach(([key, color]) => {
+          if (color == old_color) draft.draft.warp_colors[key] = new_color
+        })
+      }
     }
   }
 
@@ -31,17 +53,41 @@ $(document).ready(function () {
       const weft_block_idx = are_you_editing ? pick_idx : draft.weft_blocks[pick_idx]
       var weft_pattern = $(`#weft-block-${weft_block_idx}`);
       weft_pattern.attr('fill', `url(#color-${new_color})`)
-      if (are_you_editing) draft.draft.weft_colors[pick_idx] = new_color;
+      weft_pattern.removeClass((i, c) => c.match(/weft-pick-\d+/))
+      weft_pattern.addClass(`weft-pick-${new_color}`)
+      draft.draft.weft_colors[pick_idx] = new_color;
     }
+  }
+
+  const replaceWeftColor = function(e) {
+    const new_color = $('#selected-color').val();
+    const fill = `url(#color-${new_color})`
+    if (new_color) {
+      const swatch = $(e.target);
+      const old_color = swatch.data('color');
+      swatch.attr('fill', fill);
+      swatch.next('text').html(`#${new_color}`);
+
+      $(`.weft-pick-${old_color}`).attr('fill', fill);
+      if (are_you_editing) {
+        Object.entries(draft.draft.weft_colors).forEach(([key, color]) => {
+          if (color == old_color) draft.draft.weft_colors[key] = new_color
+        })
+      }
+    }
+
   }
 
   const resetColor = function() {
     $(this).attr('fill', `url(#color-${this.dataset.color})`)
+    $(this).next('text').html(`#${this.dataset.color}`)
   }
   const resetDefaultColors = function (e) {
     e.preventDefault();
     $('.weft-block').each(resetColor)
     $('.warp-block').each(resetColor)
+    $('.warp-swatch').each(resetColor)
+    $('.weft-swatch').each(resetColor)
   }
 
   const generateThreadingPath = function({warp}) {
@@ -246,10 +292,12 @@ $(document).ready(function () {
   }
 
   // hook it all up
-  $('#threading-colors').click(setWarpColor);
-  $('#treadling-colors').click(setWeftColor);
   $('#reset-default-colors').click(resetDefaultColors);
+  $('.warp-swatch').click(replaceWarpColor);
+  $('.weft-swatch').click(replaceWeftColor);
   if (are_you_editing) {
+    $('#threading-colors').click(setWarpColor);
+    $('#treadling-colors').click(setWeftColor);
     $('#threading').click(setWarpThread);
     $('#treadling').click(setWeftPick);
     $('#tieup').click(toggleTieUp);

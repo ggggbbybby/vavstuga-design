@@ -93,9 +93,9 @@ $(document).ready(function () {
   const generateThreadingPath = function({warp}) {
     var path = `M ${warp_width * PIXEL_SIZE},${(weft_height + 1) * PIXEL_SIZE}\n`
     warp.forEach((shaft) => {
-      path += `m 0, ${PIXEL_SIZE * (shaft-1)}\n`
-      path += `v ${PIXEL_SIZE}, h -${PIXEL_SIZE}, v -${PIXEL_SIZE}, h ${PIXEL_SIZE}\n`
-      path += `m -${PIXEL_SIZE},-${PIXEL_SIZE * (shaft-1)}\n`
+      path += `m 0 ${PIXEL_SIZE * (shaft-1)}\n`
+      path += `v ${PIXEL_SIZE}  h -${PIXEL_SIZE} v -${PIXEL_SIZE} h ${PIXEL_SIZE}\n`
+      path += `m -${PIXEL_SIZE} -${PIXEL_SIZE * (shaft-1)}\n`
     })
     return path
   }
@@ -103,9 +103,9 @@ $(document).ready(function () {
   const generateTreadlingPath = function({weft}) {
     var path = `M ${(warp_width + 1) * PIXEL_SIZE},${weft_height * PIXEL_SIZE}\n`
     weft.forEach((treadle) => {
-      path += `m ${PIXEL_SIZE * (treadle - 1)}, 0\n`
-      path += `v -${PIXEL_SIZE}, h ${PIXEL_SIZE}, v ${PIXEL_SIZE}, h -${PIXEL_SIZE}\n`
-      path += `m -${PIXEL_SIZE * (treadle - 1)}, -${PIXEL_SIZE}\n`
+      path += `m ${PIXEL_SIZE * (treadle - 1)} 0\n`
+      path += `v -${PIXEL_SIZE} h ${PIXEL_SIZE} v ${PIXEL_SIZE} h -${PIXEL_SIZE}\n`
+      path += `m -${PIXEL_SIZE * (treadle - 1)} -${PIXEL_SIZE}\n`
     })
     return path
   }
@@ -114,26 +114,26 @@ $(document).ready(function () {
     var path = `M ${(warp_width + 1) * PIXEL_SIZE},${(weft_height + 1) * PIXEL_SIZE}\n`
     tieup.forEach((shafts) => {
       shafts.forEach((shaft) => {
-        path += `m 0, ${PIXEL_SIZE * (shaft - 1)}\n`
-        path += `v ${PIXEL_SIZE}, h ${PIXEL_SIZE}, v -${PIXEL_SIZE}, h -${PIXEL_SIZE}\n`
-        path += `m 0, -${PIXEL_SIZE * (shaft - 1)}\n`
+        path += `m 0 ${PIXEL_SIZE * (shaft - 1)}\n`
+        path += `v ${PIXEL_SIZE} h ${PIXEL_SIZE} v -${PIXEL_SIZE} h -${PIXEL_SIZE}\n`
+        path += `m 0 -${PIXEL_SIZE * (shaft - 1)}\n`
       })
-      path += `m ${PIXEL_SIZE}, 0\n`
+      path += `m ${PIXEL_SIZE} 0\n`
     })
     return path
   }
 
   const generateMaskPath = function({warp, weft, tieup}) {
-    var path = `M ${warp_width * PIXEL_SIZE},${weft_height * PIXEL_SIZE}\n`
+    var path = `M ${warp_width * PIXEL_SIZE} ${weft_height * PIXEL_SIZE}\n`
     weft.forEach((treadle) => {
       warp.forEach((shaft) => {
         sinking_shafts = tieup[treadle - 1]
         if (!sinking_shafts.includes(shaft)) {
-          path += `v -${PIXEL_SIZE}, h -${PIXEL_SIZE}, v ${PIXEL_SIZE}, h ${PIXEL_SIZE}\n`
+          path += `v -${PIXEL_SIZE} h -${PIXEL_SIZE} v ${PIXEL_SIZE} h ${PIXEL_SIZE}\n`
         }
-        path += `m -${PIXEL_SIZE},0\n`
+        path += `m -${PIXEL_SIZE} 0\n`
       })
-      path += `m ${warp.length * PIXEL_SIZE}, -${PIXEL_SIZE}\n`
+      path += `m ${warp.length * PIXEL_SIZE} -${PIXEL_SIZE}\n`
     })
     return path
   }

@@ -176,16 +176,16 @@ class Draft < ApplicationRecord
     warp_width = threading.length
     warp_length = treadling.length
 
-    path = "M #{warp_width*PIXEL_SIZE},#{warp_length*PIXEL_SIZE}"
+    path = "M #{warp_width*PIXEL_SIZE} #{warp_length*PIXEL_SIZE}"
     treadling.each do |treadle|
       threading.each do |warp_thread|
         sinking_shafts = tieup[treadle - 1]
         if !sinking_shafts.include?(warp_thread)
-          path << "\nv-#{PIXEL_SIZE},h-#{PIXEL_SIZE},v#{PIXEL_SIZE},h#{PIXEL_SIZE}"
+          path << "\nv-#{PIXEL_SIZE} h-#{PIXEL_SIZE} v#{PIXEL_SIZE} h#{PIXEL_SIZE}"
         end
-        path << "\nm-#{PIXEL_SIZE},0"
+        path << "\nm-#{PIXEL_SIZE} 0"
       end
-      path << "\nm#{warp_width*PIXEL_SIZE},-#{PIXEL_SIZE}"
+      path << "\nm#{warp_width*PIXEL_SIZE} -#{PIXEL_SIZE}"
     end
     path
   end
@@ -193,18 +193,18 @@ class Draft < ApplicationRecord
   def threading_path
     init_move = "M #{warp_pixel_width},#{weft_pixel_height + PIXEL_SIZE}"
     threading.each_with_object([init_move]) do |warp, path|
-      path << "m 0,#{PIXEL_SIZE * (warp-1)}"
-      path << "v #{PIXEL_SIZE}, h -#{PIXEL_SIZE}, v -#{PIXEL_SIZE}, h #{PIXEL_SIZE}"
-      path << "m -#{PIXEL_SIZE}, -#{PIXEL_SIZE * (warp-1)}"
+      path << "m 0 #{PIXEL_SIZE * (warp-1)}"
+      path << "v #{PIXEL_SIZE}  h -#{PIXEL_SIZE} v -#{PIXEL_SIZE}  h #{PIXEL_SIZE}"
+      path << "m -#{PIXEL_SIZE} -#{PIXEL_SIZE * (warp-1)}"
     end.join("\n")
   end
 
   def treadling_path
     init_move = "M #{warp_pixel_width + PIXEL_SIZE},#{weft_pixel_height}"
     treadling.each_with_object([init_move]) do |weft, path|
-      path << "m #{PIXEL_SIZE * (weft-1)},0"
-      path << "v -#{PIXEL_SIZE}, h #{PIXEL_SIZE}, v #{PIXEL_SIZE},h -#{PIXEL_SIZE}"
-      path << "m -#{PIXEL_SIZE * (weft-1)}, -#{PIXEL_SIZE}"
+      path << "m #{PIXEL_SIZE * (weft-1)} 0"
+      path << "v -#{PIXEL_SIZE} h #{PIXEL_SIZE} v #{PIXEL_SIZE} h -#{PIXEL_SIZE}"
+      path << "m -#{PIXEL_SIZE * (weft-1)} -#{PIXEL_SIZE}"
     end.join("\n")
   end
 
@@ -212,9 +212,9 @@ class Draft < ApplicationRecord
     init_move = "M #{warp_pixel_width + PIXEL_SIZE},#{weft_pixel_height + PIXEL_SIZE}"
     tieup.each_with_object([init_move]) do |shafts, path|
       shafts.each do |shaft|
-        path << "m 0,#{PIXEL_SIZE*(shaft-1)}"
-        path << "v #{PIXEL_SIZE}, h #{PIXEL_SIZE}, v -#{PIXEL_SIZE}, h -#{PIXEL_SIZE}"
-        path << "m 0,-#{PIXEL_SIZE*(shaft-1)}"
+        path << "m 0 #{PIXEL_SIZE*(shaft-1)}"
+        path << "v #{PIXEL_SIZE} h #{PIXEL_SIZE} v -#{PIXEL_SIZE} h -#{PIXEL_SIZE}"
+        path << "m 0 -#{PIXEL_SIZE*(shaft-1)}"
       end
       path << "m #{PIXEL_SIZE},0"
     end.join("\n")

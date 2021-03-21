@@ -1,4 +1,4 @@
-$(document).ready(function () {
+var onload = function () {
   if (!window.draft) return; // we're not on a page with a draft
 
   const PIXEL_SIZE = window.draft.pixel_size;
@@ -27,6 +27,7 @@ $(document).ready(function () {
   }
 
   const replaceWarpColor = function(e) {
+    console.log("replaceWarpColor")
     const new_color = $('#selected-color').val();
     const fill = `url(#color-${new_color})`
     if (new_color) {
@@ -60,6 +61,7 @@ $(document).ready(function () {
   }
 
   const replaceWeftColor = function(e) {
+    console.log("replaceWeftColor")
     const new_color = $('#selected-color').val();
     const fill = `url(#color-${new_color})`
     if (new_color) {
@@ -304,4 +306,6 @@ $(document).ready(function () {
     $('#add-weft-picks').click(addWeftPicks);
     $('form').submit(saveDraft);
   }
-});
+}
+$(window).on('load', onload);
+$(window).on('turbolinks:load', onload);

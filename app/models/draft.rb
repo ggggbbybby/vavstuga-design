@@ -179,6 +179,7 @@ class Draft < ApplicationRecord
     path = "M #{warp_width*PIXEL_SIZE} #{warp_length*PIXEL_SIZE}"
     treadling.each do |treadle|
       threading.each do |warp_thread|
+        treadle ||= 1 # if there's nothing there, don't have a cow
         sinking_shafts = tieup[treadle - 1]
         if !sinking_shafts.include?(warp_thread)
           path << "\nv-#{PIXEL_SIZE} h-#{PIXEL_SIZE} v#{PIXEL_SIZE} h#{PIXEL_SIZE}"
@@ -193,6 +194,7 @@ class Draft < ApplicationRecord
   def threading_path
     init_move = "M #{warp_pixel_width},#{weft_pixel_height + PIXEL_SIZE}"
     threading.each_with_object([init_move]) do |warp, path|
+      warp ||= 1 # don't go out of bounds if a thread is missing
       path << "m 0 #{PIXEL_SIZE * (warp-1)}"
       path << "v #{PIXEL_SIZE}  h -#{PIXEL_SIZE} v -#{PIXEL_SIZE}  h #{PIXEL_SIZE}"
       path << "m -#{PIXEL_SIZE} -#{PIXEL_SIZE * (warp-1)}"
@@ -202,6 +204,7 @@ class Draft < ApplicationRecord
   def treadling_path
     init_move = "M #{warp_pixel_width + PIXEL_SIZE},#{weft_pixel_height}"
     treadling.each_with_object([init_move]) do |weft, path|
+      weft ||= 1 # don't go out of bounds if a treadle is missing
       path << "m #{PIXEL_SIZE * (weft-1)} 0"
       path << "v -#{PIXEL_SIZE} h #{PIXEL_SIZE} v #{PIXEL_SIZE} h -#{PIXEL_SIZE}"
       path << "m -#{PIXEL_SIZE * (weft-1)} -#{PIXEL_SIZE}"

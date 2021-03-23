@@ -78,11 +78,10 @@
         return `url("<%= @yarn.url %>-${color}.jpg")`
       };
 
+      var color_names = <%= @yarn.color_names.to_json.html_safe %>;
       var colorName = function(color_code) {
-        return colors.find(function(c) {
-          return c.code == color_code;
-        }).name;
-      };      
+        return color_names[color_code];
+      };
     <% end %>
   </script>
   </body>

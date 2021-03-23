@@ -79,7 +79,7 @@ module DraftsHelper
         x: (idx * (Draft::SWATCH_SIZE + swatch_gutter)) + offset, 
         color: color, 
         label: "##{color}",
-        color_name: color_names[color.to_i].downcase
+        color_name: color_names[color]
       }
     end
   end

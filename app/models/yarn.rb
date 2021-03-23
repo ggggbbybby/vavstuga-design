@@ -18,7 +18,7 @@ class Yarn < ApplicationRecord
 
   def color_names
     colors.each_with_object({}) do |color, memo|
-      memo[color['code']] = color['name'].titlecase
+      memo[color['code'].to_s] = color['name'].titlecase
     end
   end
 

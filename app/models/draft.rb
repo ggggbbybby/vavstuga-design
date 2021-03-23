@@ -41,8 +41,8 @@ class Draft < ApplicationRecord
       'warp' => [],
       'weft' => [],
       'tieup' => [],
-      'warp_colors' => {'default' => '2000'},
-      'weft_colors' => {'default' => '2020'},
+      'warp_colors' => {},
+      'weft_colors' => {},
     })
   end
 
@@ -50,6 +50,8 @@ class Draft < ApplicationRecord
     draft['warp'] = (1..shafts).to_a
     draft['weft'] = (1..treadles).to_a
     draft['tieup'] = (1..treadles).map { |t| t <= shafts ? [t] : [] }
+    draft['warp_colors'] = { 'default' => yarn.default_warp }
+    draft['weft_colors'] = { 'default' => yarn.default_weft }
   end
 
   def to_json(mode: :show)
@@ -88,11 +90,11 @@ class Draft < ApplicationRecord
   end
 
   def warp_colors
-    draft['warp_colors'] || { 'default' => '2000' }
+    draft['warp_colors'] || { 'default' => yarn.default_warp }
   end
 
   def weft_colors
-    draft['weft_colors'] || { 'default' => '2005' }
+    draft['weft_colors'] || { 'default' => yarn.default_weft }
   end
 
   def color_palette

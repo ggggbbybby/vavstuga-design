@@ -16,6 +16,12 @@ class Yarn < ApplicationRecord
     end
   end
 
+  def color_names
+    colors.each_with_object({}) do |color, memo|
+      memo[color['code']] = color['name'].titlecase
+    end
+  end
+
   def self.to_options
     Yarn.all.map { |y| [y.display_name, y.id] }
   end

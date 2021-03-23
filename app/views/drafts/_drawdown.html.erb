@@ -64,11 +64,13 @@
   <% warp_swatches(draft).each do |swatch| %>
     <rect class="warp-swatch" x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" data-color="<%=swatch[:color]%>"/>
     <text class='warp-swatch-caption' x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
+    <text class='weft-swatch-color-name' font-size="smaller" x="<%= swatch[:x] %>" y="<%= swatches_color_name_baseline_y(draft) %>"> <%=swatch[:color_name]%> </text>
   <% end %>
 
   <text id="weft-swatches-label" x="<%= weft_swatches_offset(draft) %>" y="<%= swatches_label_baseline_y(draft) %>">Weft Colors</text>
   <% weft_swatches(draft).each do |swatch| %>
     <rect class="weft-swatch" x="<%= swatch[:x] %>" y="<%= swatches_y(draft) %>" fill="<%="url(#color-swatch-#{swatch[:color]})"%>" width="<%=Draft::SWATCH_SIZE%>" height="<%=Draft::SWATCH_SIZE%>" data-color="<%=swatch[:color]%>"/>
     <text class='weft-swatch-caption' x="<%= swatch[:x] %>" y="<%= swatches_caption_baseline_y(draft) %>"> <%=swatch[:label]%> </text>
+    <text class='weft-swatch-color-name' font-size="smaller" x="<%= swatch[:x] %>" y="<%= swatches_color_name_baseline_y(draft) %>"> <%=swatch[:color_name]%> </text>
   <% end %>
 </svg>

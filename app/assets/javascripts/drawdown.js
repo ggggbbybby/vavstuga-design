@@ -27,14 +27,13 @@ var onload = function () {
   }
 
   const replaceWarpColor = function(e) {
-    console.log("replaceWarpColor")
     const new_color = $('#selected-color').val();
     const fill = `url(#color-${new_color})`
     if (new_color) {
       const swatch = $(e.target);
       const old_color = swatch.data('color');
       swatch.attr('fill', fill)
-      swatch.next('text').html(`#${new_color}`);
+      swatch.next('text').html(`#${new_color}`).next('text').html(colorName(new_color));
       
       // find & replace every warp thread in this color
       $(`.warp-thread-${old_color}`).attr('fill', fill);
@@ -61,14 +60,13 @@ var onload = function () {
   }
 
   const replaceWeftColor = function(e) {
-    console.log("replaceWeftColor")
     const new_color = $('#selected-color').val();
     const fill = `url(#color-${new_color})`
     if (new_color) {
       const swatch = $(e.target);
       const old_color = swatch.data('color');
       swatch.attr('fill', fill);
-      swatch.next('text').html(`#${new_color}`);
+      swatch.next('text').html(`#${new_color}`).next('text').html(colorName(new_color));
 
       $(`.weft-pick-${old_color}`).attr('fill', fill);
       if (are_you_editing) {

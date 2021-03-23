@@ -3,12 +3,16 @@ module DraftsHelper
     Draft::PIXEL_SIZE
   end
 
+  def swatch_gutter
+    20
+  end
+
   def text_height
     Draft::PIXEL_SIZE
   end
 
   def drawdown_svg_height(draft)
-    swatches_caption_baseline_y(draft) + 5
+    swatches_color_name_baseline_y(draft) + 5
   end
 
   def drawdown_svg_width(draft)
@@ -47,27 +51,35 @@ module DraftsHelper
     swatches_y(draft) + Draft::SWATCH_SIZE + 14
   end
 
+  def swatches_color_name_baseline_y(draft)
+    swatches_caption_baseline_y(draft) + 14
+  end
+
   def warp_swatches(draft)
+    color_names = draft.yarn.color_names
     draft.default_colors[:warp_colors].each_with_index.map do |color, idx| 
       {
-        x: idx * (Draft::SWATCH_SIZE + gutter), 
+        x: idx * (Draft::SWATCH_SIZE + swatch_gutter), 
         color: color,
-        label: "##{color}" 
+        label: "##{color}",
+        color_name: color_names[color.to_i].downcase
       }
     end
   end
 
   def weft_swatches_offset(draft)
-    draft.default_colors[:warp_colors].length * (Draft::SWATCH_SIZE + gutter)
+    draft.default_colors[:warp_colors].length * (Draft::SWATCH_SIZE + swatch_gutter)
   end
 
   def weft_swatches(draft)
     offset = weft_swatches_offset(draft)
+    color_names = draft.yarn.color_names
     draft.default_colors[:weft_colors].each_with_index.map do |color, idx|
       { 
-        x: (idx * (Draft::SWATCH_SIZE + gutter)) + offset, 
+        x: (idx * (Draft::SWATCH_SIZE + swatch_gutter)) + offset, 
         color: color, 
-        label: "##{color}" 
+        label: "##{color}",
+        color_name: color_names[color.to_i].downcase
       }
     end
   end
